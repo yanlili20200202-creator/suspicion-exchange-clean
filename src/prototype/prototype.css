@@ -1,0 +1,4557 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Arial, "Microsoft YaHei", "PingFang SC", Helvetica, sans-serif;
+  color: #101010;
+  background: #f3dfbd;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+#root {
+  filter: saturate(0.88) brightness(0.99);
+}
+
+html:has(.exchange-shell),
+body:has(.exchange-shell),
+#root:has(.exchange-shell) {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #86c8ff;
+}
+
+html:has(.registration-shell),
+body:has(.registration-shell),
+#root:has(.registration-shell) {
+  background: #86c8ff;
+}
+
+button {
+  font: inherit;
+}
+
+.registration-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #86c8ff;
+  padding: clamp(1rem, 2.5vw, 2rem);
+}
+
+.account-summary-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: #86c8ff;
+  padding: 1.5rem;
+}
+
+.account-summary-panel {
+  width: min(100%, 44rem);
+  background: #e8ff42;
+  padding: clamp(1.2rem, 4vw, 2.2rem);
+}
+
+.account-summary-eyebrow {
+  display: inline-block;
+  margin: 0;
+  border: 3px solid #101010;
+  background: #ff4b1f;
+  padding: 0.35rem 0.5rem;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.account-summary-panel h1 {
+  margin: 1.2rem 0;
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  font-weight: 950;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.account-summary-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.account-summary-details > div {
+  border: 4px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #101010;
+  padding: 0.75rem;
+}
+
+.account-summary-details dt {
+  font-size: 0.75rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-summary-details dd {
+  margin: 0.45rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 950;
+}
+
+.account-summary-message {
+  margin: 1rem 0 0;
+  border: 4px solid #101010;
+  background: #ffed4a;
+  padding: 0.9rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.account-summary-new-audience {
+  width: 100%;
+  margin-top: 1rem;
+  cursor: pointer;
+  border: 5px solid #101010;
+  background: #ff4b1f;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 0.9rem 1rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.account-summary-new-audience:hover,
+.account-summary-new-audience:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #101010;
+}
+
+.account-summary-bets {
+  margin-top: 1.2rem;
+}
+
+.account-summary-bets > h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-summary-bet-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.account-summary-bet {
+  border: 5px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.9rem;
+}
+
+.account-summary-bet h3 {
+  margin: 0;
+  color: #ff4b1f;
+  font-size: 1.4rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-summary-case {
+  margin: 0.55rem 0;
+  border-block: 3px solid #101010;
+  padding: 0.45rem 0;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-summary-bet dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.account-summary-bet dl > div {
+  border-left: 4px solid #101010;
+  background: #fff;
+  padding: 0.5rem;
+}
+
+.account-summary-bet dt {
+  font-size: 0.68rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-summary-bet dd {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.account-market-impact {
+  margin-top: 1.2rem;
+  border: 5px solid #101010;
+  background: #86c8ff;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 1rem;
+}
+
+.account-market-impact > h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 950;
+}
+
+.account-impact-spend {
+  margin: 0.75rem 0;
+  border: 3px solid #101010;
+  background: #ffed4a;
+  padding: 0.7rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-impact-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.account-impact-columns > section {
+  border: 4px solid #101010;
+  background: #fff;
+  padding: 0.75rem;
+}
+
+.account-impact-columns h3 {
+  margin: 0 0 0.55rem;
+  font-size: 0.9rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.account-impact-columns ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-impact-columns li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  border-top: 2px solid #101010;
+  padding-top: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.account-impact-columns li > strong {
+  color: #ff4b1f;
+  font-size: 1.2rem;
+}
+
+.account-impact-message {
+  margin: 0.8rem 0 0;
+  border: 4px solid #101010;
+  background: #ff4b1f;
+  padding: 0.8rem;
+  color: #fff;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.final-receipt {
+  position: relative;
+  margin-top: 1.4rem;
+  border: 5px solid #101010;
+  background: #fff;
+  box-shadow: 7px 7px 0 #101010;
+  padding: 1rem;
+}
+
+.final-receipt::before,
+.final-receipt::after {
+  position: absolute;
+  top: -0.65rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 4px solid #101010;
+  border-radius: 50%;
+  background: #86c8ff;
+  content: "";
+}
+
+.final-receipt::before {
+  left: -0.85rem;
+}
+
+.final-receipt::after {
+  right: -0.85rem;
+}
+
+.final-receipt-header {
+  border-bottom: 4px dashed #101010;
+  padding-bottom: 0.8rem;
+  text-align: center;
+}
+
+.final-receipt-header p,
+.final-receipt-header h2 {
+  margin: 0;
+}
+
+.final-receipt-header p {
+  color: #ff4b1f;
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+}
+
+.final-receipt-header h2 {
+  margin-top: 0.4rem;
+  font-size: 2rem;
+  font-weight: 950;
+  letter-spacing: -0.04em;
+}
+
+.final-receipt-lines {
+  margin: 0;
+  padding: 0.6rem 0;
+}
+
+.final-receipt-lines > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
+  border-bottom: 2px dotted #101010;
+  padding: 0.55rem 0;
+}
+
+.final-receipt-lines dt {
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.final-receipt-lines dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 950;
+}
+
+.final-receipt-status {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border: 4px solid #101010;
+  background: #ffed4a;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.final-receipt-status > strong {
+  border: 3px solid #101010;
+  background: #ff4b1f;
+  padding: 0.45rem;
+  color: #fff;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+
+.final-receipt-footer {
+  margin: 0.8rem 0 0;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1.25;
+}
+
+@media (max-width: 600px) {
+  .account-summary-details,
+  .account-summary-bet dl,
+  .account-impact-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .final-receipt-lines > div,
+  .final-receipt-status {
+    grid-template-columns: 1fr;
+  }
+
+  .final-receipt-lines dd {
+    text-align: left;
+  }
+}
+
+.registration-panel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: #e8ff42;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  transform: rotate(0.7deg);
+  border-width: 4px;
+}
+
+.registration-stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 90rem);
+  margin: 0 auto;
+}
+
+.registration-fake-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: clamp(2rem, 6vh, 5rem);
+}
+
+.registration-fake-nav span {
+  border: 3px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #ff4b1f;
+  padding: 0.42rem 0.7rem;
+  font-size: clamp(0.72rem, 1.2vw, 0.95rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.registration-fake-nav span:first-child {
+  background: #e8ff42;
+}
+
+.registration-composition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(22rem, 0.85fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.registration-poster {
+  position: relative;
+  z-index: 2;
+}
+
+.registration-poster-kicker {
+  display: inline-block;
+  margin: 0 0 0.8rem 1.2rem;
+  border: 3px solid #101010;
+  background: #ffed4a;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+.registration-poster h1 {
+  display: grid;
+  width: fit-content;
+  margin: 0;
+  border: 5px solid #101010;
+  background: #fff;
+  box-shadow: 12px 12px 0 #ff4b1f;
+  padding: clamp(1rem, 2.6vw, 2.2rem);
+  font-size: clamp(4rem, 9vw, 8.5rem);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.76;
+  text-transform: uppercase;
+  transform: rotate(-0.8deg);
+}
+
+.registration-poster h1 span,
+.registration-poster h1 strong {
+  display: block;
+}
+
+.registration-poster h1 strong {
+  margin-top: 0.2em;
+  color: #ff4b1f;
+  font-size: 0.63em;
+  letter-spacing: -0.055em;
+}
+
+.registration-project-title {
+  width: fit-content;
+  margin: 1.1rem 0 0 1rem;
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: rotate(1.3deg);
+}
+
+.registration-tagline {
+  width: min(90%, 37rem);
+  margin: 1.4rem 0 0 2.5rem;
+  border: 4px solid #101010;
+  background: #e8ff42;
+  box-shadow: 7px 7px 0 #101010;
+  padding: 0.85rem 1rem;
+  font-size: clamp(1.25rem, 2.5vw, 2.15rem);
+  line-height: 0.96;
+  transform: rotate(-1.4deg);
+}
+
+.registration-tagline strong {
+  display: block;
+  font-weight: 700;
+}
+
+.registration-eyebrow {
+  display: inline-block;
+  margin: 0;
+  border: 3px solid #101010;
+  background: #ffed4a;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.registration-panel h2 {
+  margin: 1.1rem 0 0.8rem;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.registration-entry-copy {
+  margin: 0 0 1.2rem;
+  border-block: 3px solid #101010;
+  padding: 0.55rem 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.registration-panel form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.registration-panel label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.registration-panel input {
+  width: 100%;
+  border: 4px solid #101010;
+  background: #fff;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.85rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  outline: none;
+}
+
+.registration-panel input:focus {
+  box-shadow: 7px 7px 0 #ff4b1f;
+}
+
+.registration-error {
+  margin: 0;
+  color: #b52100;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.generate-account-button {
+  cursor: pointer;
+  border: 4px solid #101010;
+  background: #ff4b1f;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 0.9rem;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.generate-account-button:hover,
+.generate-account-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #101010;
+}
+
+.registration-privacy-note {
+  margin: 0.2rem 0 0;
+  border-left: 3px solid #101010;
+  padding: 0.45rem 0.6rem;
+  color: #252525;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.registration-shape {
+  position: absolute;
+  border: 5px solid #101010;
+  pointer-events: none;
+}
+
+.registration-shape-lime {
+  top: 19%;
+  right: 29%;
+  width: 9rem;
+  height: 7rem;
+  background: #e8ff42;
+  transform: rotate(13deg);
+}
+
+.registration-shape-yellow {
+  bottom: -5rem;
+  left: 4%;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  background: #ffed4a;
+}
+
+.registration-shape-red {
+  right: -3rem;
+  bottom: 3%;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  background: #ff4b1f;
+}
+
+.rules-onboarding-shell {
+  display: grid;
+  position: relative;
+  min-height: 100vh;
+  place-items: center;
+  overflow: hidden;
+  background: #86c8ff;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+
+.rules-onboarding-shell::before,
+.rules-onboarding-shell::after {
+  position: absolute;
+  border: 5px solid #101010;
+  content: "";
+}
+
+.rules-onboarding-shell::before {
+  top: 16%;
+  left: -4rem;
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  background: #ffed4a;
+}
+
+.rules-onboarding-shell::after {
+  right: -3rem;
+  bottom: -4rem;
+  width: 15rem;
+  height: 15rem;
+  background: #ff4b1f;
+  transform: rotate(17deg);
+}
+
+.rules-onboarding-stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 66rem);
+}
+
+.rules-onboarding-fake-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0 0 1rem;
+}
+
+.rules-onboarding-fake-nav span {
+  border: 4px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #ff4b1f;
+  padding: 0.42rem 0.7rem;
+  font-size: clamp(0.68rem, 1.4vw, 0.88rem);
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rules-onboarding-fake-nav span:first-child {
+  background: #e8ff42;
+}
+
+.rules-onboarding-fake-nav span:last-child {
+  background: #ffed4a;
+  transform: rotate(2deg);
+}
+
+.rules-onboarding-panel {
+  width: 100%;
+  background: #f3dfbd;
+  padding: clamp(1rem, 3vw, 2rem);
+  transform: rotate(-0.25deg);
+}
+
+.rules-onboarding-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.rules-onboarding-header p {
+  width: fit-content;
+  margin: 0;
+  border: 4px solid #101010;
+  background: #e8ff42;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+}
+
+.rules-onboarding-header h1 {
+  margin: 0;
+  border: 5px solid #101010;
+  background: #ffed4a;
+  box-shadow: 7px 7px 0 #ff4b1f;
+  padding: 0.55rem 0.8rem 0.7rem;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 950;
+  letter-spacing: -0.07em;
+  line-height: 0.7;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(1deg);
+}
+
+.rules-onboarding-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.rules-onboarding-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.8rem;
+  border: 5px solid #101010;
+  min-height: 7.3rem;
+  background: #ffed4a;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 1rem;
+}
+
+.rules-onboarding-card:nth-child(2) {
+  background: #86c8ff;
+  transform: rotate(0.6deg);
+}
+
+.rules-onboarding-card:nth-child(3) {
+  background: #e8ff42;
+  transform: rotate(-0.5deg);
+}
+
+.rules-onboarding-card:nth-child(4) {
+  background: #ff4b1f;
+  color: #fff;
+}
+
+.rules-onboarding-number {
+  display: grid;
+  width: 3rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 4px solid #101010;
+  border-radius: 50%;
+  background: #fff;
+  color: #101010;
+  box-shadow: 3px 3px 0 #101010;
+  font-size: 1rem;
+}
+
+.rules-onboarding-card:nth-child(4) .rules-onboarding-number {
+  background: #ffed4a;
+  color: #101010;
+}
+
+.rules-onboarding-card p {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.rules-onboarding-account {
+  margin-top: 1.2rem;
+  border: 5px solid #101010;
+  background: #fff;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 1rem 1.1rem;
+  transform: rotate(0.3deg);
+}
+
+.rules-onboarding-account p {
+  margin: 0;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.rules-onboarding-account p:first-child {
+  color: #ff4b1f;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 950;
+}
+
+.rules-onboarding-account p + p {
+  margin-top: 0.65rem;
+}
+
+.rules-enter-market-button {
+  width: 100%;
+  margin-top: 1rem;
+  cursor: pointer;
+  border: 5px solid #101010;
+  background: #ff4b1f;
+  box-shadow: 8px 8px 0 #101010;
+  padding: 1rem;
+  color: #fff;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.rules-enter-market-button:hover,
+.rules-enter-market-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 9px 9px 0 #101010;
+}
+
+@media (max-width: 900px) {
+  .registration-shell {
+    overflow: visible;
+  }
+
+  .registration-fake-nav {
+    margin-bottom: 2rem;
+  }
+
+  .registration-composition {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .registration-poster {
+    width: min(100%, 44rem);
+  }
+
+  .registration-panel {
+    width: min(100%, 40rem);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .rules-onboarding-header {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-onboarding-header h1 {
+    grid-row: 1;
+    width: 100%;
+  }
+
+  .rules-onboarding-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-onboarding-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .exchange-shell .main-grid {
+    grid-template-areas:
+      "case-status"
+      "control-status"
+      "case-content"
+      "control-content";
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.85rem;
+  }
+
+  .exchange-shell .case-status-row {
+    justify-self: start;
+  }
+
+  .exchange-shell .control-status-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    justify-self: stretch;
+    gap: 0.85rem;
+  }
+
+  .exchange-shell .control-status-row .exchange-chip {
+    width: 100%;
+  }
+
+  .registration-shell {
+    padding: 0.8rem;
+  }
+
+  .registration-fake-nav {
+    gap: 0.45rem;
+  }
+
+  .registration-fake-nav span {
+    border-width: 3px;
+    box-shadow: 3px 3px 0 #ff4b1f;
+    padding: 0.38rem 0.48rem;
+  }
+
+  .registration-poster h1 {
+    border-width: 5px;
+    font-size: clamp(2.65rem, 16vw, 4.6rem);
+  }
+
+  .registration-poster-kicker,
+  .registration-project-title {
+    margin-left: 0;
+  }
+
+  .registration-tagline {
+    width: 96%;
+    margin-left: 0.5rem;
+  }
+
+  .registration-shape-lime {
+    display: none;
+  }
+}
+
+.cn-line {
+  display: block;
+  margin-top: 0.18rem;
+  font-size: 0.7em;
+  font-weight: 750;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: none;
+}
+
+.exchange-shell {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #86c8ff;
+}
+
+.exchange-shell::before,
+.exchange-shell::after {
+  position: fixed;
+  z-index: 0;
+  border: 6px solid #101010;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.exchange-shell::before {
+  top: 13rem;
+  left: -7rem;
+  width: 20rem;
+  height: 20rem;
+  background: #f2df55;
+}
+
+.exchange-shell::after {
+  right: -6rem;
+  bottom: -6rem;
+  width: 18rem;
+  height: 18rem;
+  background: #d9ee4d;
+}
+
+.exchange-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.exchange-shell > .exchange-header {
+  flex: 0 0 auto;
+}
+
+.exchange-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 5px solid #101010;
+  background: #f3dfbd;
+  padding: 0.8rem 1.25rem;
+}
+
+.exchange-shell > .exchange-header {
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin: 0;
+  border-bottom: 5px solid #101010;
+  background: #f3dfbd;
+  gap: 0.85rem;
+  padding: 0.9rem clamp(1rem, 3vw, 2.5rem) 1rem;
+}
+
+.exchange-fake-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0 0.25rem 0.25rem 0;
+  scrollbar-width: none;
+}
+
+.exchange-fake-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.exchange-fake-nav span {
+  flex: 0 0 auto;
+  border: 4px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #df4b2f;
+  padding: 0.55rem 0.85rem;
+  font-size: clamp(0.88rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.exchange-fake-nav span:first-child {
+  background: #e8ff42;
+}
+
+.exchange-fake-nav .ai-rules-nav-item small,
+.rules-onboarding-fake-nav .ai-rules-nav-item small,
+.ai-rules-nav-item.is-escaping small {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.55em;
+  line-height: 1;
+  text-transform: none;
+}
+
+.ai-rules-nav-item.is-escaping {
+  position: fixed;
+  z-index: 2147483647;
+  box-sizing: border-box;
+  margin: 0;
+  border: 3px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #df4b2f;
+  padding: 0.55rem 0.85rem;
+  color: #101010;
+  font-family: inherit;
+  font-size: clamp(0.88rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  animation: ai-rules-random-flight 1000ms linear both;
+  will-change: transform;
+}
+
+.exchange-fake-nav .ai-rules-nav-placeholder,
+.rules-onboarding-fake-nav .ai-rules-nav-placeholder {
+  box-sizing: border-box;
+  background: transparent;
+  box-shadow: none;
+  visibility: hidden;
+}
+
+.rules-onboarding-fake-nav .ai-rules-nav-item {
+  background: #fff;
+  transform: none;
+}
+
+.ai-rules-chaos-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.ai-rules-warning {
+  position: absolute;
+  top: var(--warning-top);
+  left: var(--warning-left);
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 3px 3px 0 #df4b2f;
+  padding: 0.45rem 0.7rem;
+  color: #101010;
+  font-family: inherit;
+  font-size: clamp(0.72rem, 1.4vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: rotate(var(--warning-rotation)) scale(0.75);
+  animation: ai-rules-warning-flash 760ms ease-out var(--warning-delay) both;
+  white-space: nowrap;
+}
+
+.ai-rules-warning small {
+  display: block;
+  margin-top: 0.18rem;
+  font-size: 0.62em;
+  text-transform: none;
+}
+
+@keyframes ai-rules-random-flight {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  20% {
+    transform: translate3d(var(--flight-x-1), var(--flight-y-1), 0)
+      rotate(var(--flight-r-1));
+  }
+
+  43% {
+    transform: translate3d(var(--flight-x-2), var(--flight-y-2), 0)
+      rotate(var(--flight-r-2));
+  }
+
+  67% {
+    transform: translate3d(var(--flight-x-3), var(--flight-y-3), 0)
+      rotate(var(--flight-r-3));
+  }
+
+  84% {
+    transform: translate3d(var(--flight-x-4), var(--flight-y-4), 0)
+      rotate(var(--flight-r-4));
+  }
+}
+
+@keyframes ai-rules-warning-flash {
+  0%,
+  100% {
+    opacity: 0;
+    transform: rotate(var(--warning-rotation)) scale(0.75);
+  }
+
+  18%,
+  78% {
+    opacity: 0.92;
+    transform: rotate(var(--warning-rotation)) scale(1);
+  }
+}
+
+.exchange-logo,
+.exchange-chip {
+  border: 4px solid #101010;
+  box-shadow: 5px 5px 0 #101010;
+  font-weight: 950;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.exchange-chip.account-chip {
+  background: #ffed4a;
+}
+
+.exchange-chip.round-chip {
+  background: #fff;
+}
+
+.exchange-chip.trust-chip {
+  background: #df4b2f;
+  color: #fff;
+}
+
+.account-chip > span:not(.cn-line) {
+  display: block;
+  margin-top: 0.3rem;
+  border-top: 2px solid #101010;
+  padding-top: 0.3rem;
+}
+
+.new-account-button {
+  width: 100%;
+  margin-top: 0.45rem;
+  cursor: pointer;
+  border: 2px solid #101010;
+  background: #fff;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 950;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.new-account-button:hover,
+.new-account-button:focus-visible {
+  background: #86c8ff;
+}
+
+.exchange-logo {
+  display: flex;
+  align-items: center;
+  background: #e8ff42;
+  padding: 0.75rem 0.9rem;
+  font-size: clamp(1.55rem, 2.4vw, 2.4rem);
+  line-height: 0.95;
+}
+
+.exchange-shell > .exchange-header .exchange-logo {
+  flex: 1 1 30rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.exchange-subtitle {
+  margin: 0.45rem 0 0;
+  border-top: 3px solid #101010;
+  padding-top: 0.4rem;
+  font-size: 0.42em;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.exchange-chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  line-height: 1.05;
+}
+
+.exchange-shell > .exchange-header .exchange-chip {
+  flex: 0 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+.judgement-progress {
+  display: block;
+  margin-top: 0.35rem;
+  border-top: 2px solid #101010;
+  padding-top: 0.35rem;
+}
+
+.panel {
+  border: 5px solid #101010;
+  background: #fff;
+  box-shadow: 8px 8px 0 #101010;
+}
+
+.panel-title {
+  margin: 0;
+  border-bottom: 4px solid #101010;
+  padding: 0.65rem 0.8rem;
+  background: #86c8ff;
+  font-size: 1rem;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.label-warning {
+  display: inline-block;
+  border: 4px solid #101010;
+  background: #ffed4a;
+  box-shadow: 4px 4px 0 #ff4b1f;
+  padding: 0.6rem 0.75rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-areas:
+    "case-status control-status"
+    "case-content control-content";
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  align-items: stretch;
+  column-gap: clamp(1rem, 1.6vw, 1.4rem);
+  row-gap: 0.85rem;
+  padding: clamp(1rem, 1.5vw, 1.5rem);
+}
+
+.case-status-row {
+  grid-area: case-status;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.control-status-row {
+  grid-area: control-status;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0.85rem;
+}
+
+.case-status-row .exchange-chip,
+.control-status-row .exchange-chip {
+  width: fit-content;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.judgement-table {
+  position: relative;
+  flex: 1 1 auto;
+  width: 90vw;
+  max-width: 1400px;
+  min-height: 0;
+  box-sizing: border-box;
+  margin: clamp(0.75rem, 1.5vw, 1.5rem) auto;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 1.5rem 0.75rem 1rem;
+}
+
+.table-open-label {
+  position: static;
+  grid-column: 1 / -1;
+  justify-self: start;
+  max-width: calc(100% - 2rem);
+  box-sizing: border-box;
+  margin: 0 0 0.1rem 0.25rem;
+  transform: none;
+  border: 3px solid #101010;
+  background: #86c8ff;
+  box-shadow: 3px 3px 0 #101010;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.case-column,
+.control-column {
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+}
+
+.case-column {
+  grid-area: case-content;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  justify-self: start;
+}
+
+.case-column > .post {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.control-column {
+  grid-area: control-content;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+}
+
+.control-column > .action-panel {
+  flex: 1 1 auto;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  justify-self: stretch;
+}
+
+.post {
+  padding: 1.2rem;
+}
+
+.case-board {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: clamp(38rem, 67vh, 44rem);
+  box-sizing: border-box;
+  overflow: visible;
+  background: #fff;
+  box-shadow: 10px 10px 0 #101010;
+  padding: clamp(1.2rem, 2vw, 1.7rem);
+}
+
+.case-post-card {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 5px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 6px 6px 0 #101010;
+  padding: clamp(1rem, 1.6vw, 1.4rem);
+}
+
+.case-top-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.case-top-tags .post-meta {
+  width: fit-content;
+  min-width: max-content;
+  max-width: none;
+  margin: 0;
+  border: 3px solid #101010;
+  background: #fff;
+  box-shadow: 3px 3px 0 #101010;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.15;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.case-top-tags > .label-warning {
+  width: fit-content;
+  min-width: max-content;
+  max-width: none;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 0 #101010;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.post-user-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 4px solid #101010;
+  padding-bottom: 0.75rem;
+}
+
+.post-avatar {
+  flex: 0 0 auto;
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid #101010;
+  border-radius: 50%;
+  background: #86c8ff;
+  box-shadow: 3px 3px 0 #101010;
+}
+
+.post-user-copy {
+  min-width: 0;
+}
+
+.post-user-copy strong,
+.post-user-copy > span {
+  display: block;
+}
+
+.post-user-copy strong {
+  font-size: 1.05rem;
+  font-weight: 950;
+}
+
+.post-user-copy > span {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.case-board > .evidence-grid {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 0.8rem;
+}
+
+.case-original-post {
+  width: 100%;
+  height: clamp(20rem, 31vw, 28rem);
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0.9rem 0 1.1rem;
+  border: 5px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 6px 6px 0 #101010;
+}
+
+.case-original-post img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+}
+
+.case-reality-card {
+  min-height: 0;
+  background: #ffed4a;
+}
+
+.case-board > .next-case-button {
+  display: flex;
+  flex: 0 0 auto;
+  margin-top: 1rem;
+  margin-left: auto;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.post h1 {
+  max-width: 18ch;
+  margin: 1rem 0 0.8rem;
+  font-size: clamp(3.2rem, 5.2vw, 5.9rem);
+  font-weight: 950;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.case-post-card h1::first-letter {
+  text-transform: uppercase;
+}
+
+.case-post-card h1 > .cn-line {
+  margin-top: 0.4rem;
+  font-size: 0.58em;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.post-body {
+  max-width: 62ch;
+  margin: 0;
+  font-size: clamp(1.15rem, 1.55vw, 1.42rem);
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.case-post-card .post-body > .cn-line {
+  margin-top: 0.45rem;
+  font-size: 0.78em;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0.85rem;
+}
+
+.evidence-card {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  box-sizing: border-box;
+  min-height: 11rem;
+  padding: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.evidence-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.evidence-card p,
+.evidence-card blockquote {
+  margin: 0 0 0.7rem;
+  font-size: 0.92rem;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.evidence-card:nth-child(2) {
+  background: #c7ff5a;
+}
+
+.evidence-card:nth-child(3) {
+  background: #ffed4a;
+}
+
+.case-board .cn-line {
+  font-size: 0.78em;
+  line-height: 1.25;
+}
+
+.case-board .case-reality-card {
+  min-height: 0;
+  container-type: inline-size;
+  border-width: 4px;
+  box-shadow: 3px 3px 0 #101010;
+  padding: 0.72rem 0.85rem;
+  overflow: hidden;
+}
+
+.case-reality-card .reality-line {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font-size: clamp(0.9rem, 1.7cqw, 1.05rem);
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.case-reality-card .reality-line strong {
+  display: inline;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.case-reality-card .reality-line strong > span {
+  margin-left: clamp(0.12rem, 0.5cqw, 0.35rem);
+  font-size: 0.86em;
+}
+
+.case-reality-card .reality-divider {
+  display: inline-block;
+  margin: 0 clamp(0.15rem, 0.5cqw, 0.35rem);
+  font-weight: 700;
+}
+
+.case-board .case-reality-card p {
+  margin-bottom: 0;
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+.case-board .case-reality-card h2 {
+  margin-bottom: 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.action-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+  background: #e8ff42;
+  padding: 1rem;
+}
+
+.action-panel > .judgement-input-rule,
+.action-panel > .action-buttons,
+.action-panel > .bet-confirmation,
+.action-panel > .market-data-note,
+.action-panel > .reset-market-button,
+.action-panel > .feedback {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.betting-table-label {
+  display: inline-block;
+  margin: 0 0 0.45rem;
+  border: 3px solid #101010;
+  background: #fff;
+  padding: 0.3rem 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.action-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.5rem, 3.3vw, 4rem);
+  font-weight: 950;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.judgement-input-rule {
+  margin: 0 0 0.75rem;
+  border: 5px solid #101010;
+  background: #ffed4a;
+  box-shadow: none;
+  padding: 0.65rem 0.75rem;
+}
+
+.input-rule-label {
+  display: inline-block;
+  border: 3px solid #101010;
+  background: #101010;
+  padding: 0.25rem 0.4rem;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.judgement-input-rule p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+.action-buttons {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.action-button {
+  cursor: pointer;
+  border: 4px solid #101010;
+  background: #df4b2f;
+  box-shadow: 4px 4px 0 #101010;
+  padding: 0.85rem;
+  color: #fff;
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.action-panel .action-button {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: 5.9rem;
+  border-width: 5px;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 0.9rem 1rem;
+  font-size: 1.45rem;
+  line-height: 1.05;
+}
+
+.action-panel .action-button .cn-line {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  line-height: 1.1;
+}
+
+.bet-token {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid #101010;
+  border-radius: 50%;
+  background: #ffed4a;
+  color: #101010;
+  font-size: 0.7rem;
+  box-shadow: 2px 2px 0 #101010;
+}
+
+.bet-token b,
+.bet-token small {
+  line-height: 0.9;
+}
+
+.bet-token small {
+  margin-top: 0.12rem;
+  font-size: 0.6rem;
+}
+
+.action-button:nth-child(even) {
+  background: #fff;
+  color: #101010;
+}
+
+.action-panel .action-button:nth-child(even) .bet-token {
+  background: #df4b2f;
+  color: #fff;
+}
+
+.action-button:hover,
+.action-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #101010;
+}
+
+.action-panel .action-button:hover,
+.action-panel .action-button:focus-visible {
+  box-shadow: 8px 8px 0 #101010;
+}
+
+.trust-chip-balance {
+  color: #b72e0d;
+  font-size: 0.82rem;
+}
+
+.bet-confirmation {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  border: 5px solid #101010;
+  background: #fff;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 1rem;
+}
+
+.bet-confirmation h3,
+.bet-confirmation p {
+  margin: 0;
+}
+
+.bet-confirmation h3 {
+  margin: 0.4rem 0 0.8rem;
+  font-size: 1.55rem;
+  text-transform: uppercase;
+}
+
+.bet-confirmation-label {
+  color: #b72e0d;
+  font-size: 0.85rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bet-risk-note {
+  margin-top: 0.6rem !important;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.bet-error {
+  margin-top: 0.7rem !important;
+  border: 3px solid #101010;
+  background: #ffed4a;
+  padding: 0.6rem;
+  color: #b72e0d;
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.bet-confirmation-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.confirm-bet-button,
+.cancel-bet-button {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 3px solid #101010;
+  box-shadow: 3px 3px 0 #101010;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.confirm-bet-button {
+  background: #df4b2f;
+  color: #fff;
+}
+
+.cancel-bet-button {
+  background: #fff;
+  color: #101010;
+}
+
+.confirm-bet-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.market-data-note {
+  margin: 0.75rem 0 0;
+  border: 3px dashed #101010;
+  background: #f3dfbd;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.reset-market-button {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0.7rem 0 0.2rem;
+  cursor: pointer;
+  border: 5px solid #101010;
+  background: #86c8ff;
+  box-shadow: 6px 6px 0 #101010;
+  padding: 0.65rem 0.8rem;
+  color: #101010;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.reset-market-button:hover,
+.reset-market-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #101010;
+}
+
+.next-case-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  justify-self: end;
+  cursor: pointer;
+  border: 4px solid #101010;
+  background: #86c8ff;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.8rem 1.4rem;
+  color: #101010;
+  font-size: 1.05rem;
+  font-weight: 950;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.next-post-main {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.next-post-main > .cn-line {
+  font-size: 0.68em;
+}
+
+.next-post-preview {
+  border-top: 2px solid #101010;
+  padding-top: 0.3rem;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.next-post-preview > .cn-line {
+  font-size: 0.86em;
+}
+
+.next-case-button:hover,
+.next-case-button:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #101010;
+}
+
+.feedback {
+  min-height: 10rem;
+  padding: 1rem;
+}
+
+.control-column > .feedback {
+  min-height: 8rem;
+  padding: 0.85rem;
+}
+
+.exchange-shell .action-panel > .feedback {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  width: calc(100% - 0.5rem);
+  max-width: calc(100% - 0.5rem);
+  height: auto;
+  max-height: 105px;
+  min-height: 0;
+  box-sizing: border-box;
+  margin: 1rem 0.5rem 1rem 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  padding: 0.85rem;
+}
+
+.exchange-shell .action-panel > .feedback .feedback-message {
+  font-size: clamp(0.95rem, 1.8vh, 1.15rem);
+  line-height: 1.1;
+}
+
+.exchange-shell .action-panel > .feedback .feedback-detail {
+  margin-top: 0.45rem;
+  font-size: clamp(0.66rem, 1.25vh, 0.78rem);
+  line-height: 1.25;
+}
+
+.feedback-status {
+  margin: 0 0 0.7rem;
+  color: #ff4b1f;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.feedback-message {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.feedback-detail {
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.market-page {
+  width: min(100%, 760px);
+  min-height: 100vh;
+  margin: 0 auto;
+  border-inline: 5px solid #101010;
+  background: #86c8ff;
+}
+
+.market-page .exchange-header {
+  align-items: flex-start;
+}
+
+.market-content {
+  display: grid;
+  gap: 1rem;
+  padding: 1.1rem;
+}
+
+.market-clock {
+  text-align: right;
+  font-size: 0.75rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.market-subtitle {
+  margin: 0.45rem 0 0;
+  border-top: 3px solid #101010;
+  padding-top: 0.4rem;
+  font-size: 0.42em;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.index-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.4rem 1rem;
+  border: 4px solid #101010;
+  background: #fff;
+  box-shadow: 4px 4px 0 #101010;
+  padding: 0.7rem;
+}
+
+.index-name,
+.index-value {
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.index-value {
+  font-size: 1.35rem;
+}
+
+.index-track {
+  grid-column: 1 / -1;
+  height: 0.7rem;
+  border: 2px solid #101010;
+  background: #f3dfbd;
+}
+
+.index-fill {
+  height: 100%;
+  border-right: 2px solid #101010;
+  background: #ff4b1f;
+}
+
+.market-section {
+  padding: 0.85rem;
+}
+
+.movement-board {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: end;
+  gap: 0.25rem;
+  height: 7rem;
+  border: 4px solid #101010;
+  background: #101010;
+  padding: 0.45rem;
+}
+
+.movement-bar {
+  min-height: 10%;
+  background: #e8ff42;
+}
+
+.warning-box {
+  border: 5px solid #101010;
+  background: #ff4b1f;
+  box-shadow: 7px 7px 0 #101010;
+  padding: 1rem;
+  color: #fff;
+}
+
+.warning-box p {
+  margin: 0.3rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.log-list {
+  display: grid;
+  gap: 0.45rem;
+  max-height: 11rem;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.log-item {
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  padding: 0.55rem;
+  font-family: Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.trust-chips-flow-list {
+  max-height: none;
+}
+
+.trust-chips-pool {
+  background: #f3dfbd;
+  font-family: Arial, "Microsoft YaHei", "PingFang SC", Helvetica, sans-serif;
+}
+
+.trust-chips-pool-leading {
+  background: #ffed4a;
+  box-shadow: 4px 4px 0 #101010;
+}
+
+.trust-chips-pool-label {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+.trust-chips-track {
+  height: 1rem;
+  border: 3px solid #101010;
+  background: #fff;
+}
+
+.trust-chips-fill {
+  height: 100%;
+  background: #ff4b1f;
+}
+
+.trust-chips-pool-leading .trust-chips-fill {
+  background: #101010;
+}
+
+.trust-chips-leading-message {
+  margin: 0.75rem 0 0;
+  border: 3px solid #101010;
+  background: #ffed4a;
+  padding: 0.7rem;
+  font-size: 0.9rem;
+  font-family: Arial, "Microsoft YaHei", "PingFang SC", Helvetica, sans-serif;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.log-change {
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.log-action {
+  display: block;
+  font-weight: 950;
+}
+
+.log-audience {
+  display: block;
+  margin-top: 0.35rem;
+  border-left: 4px solid #ff4b1f;
+  padding-left: 0.45rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+}
+
+.prediction {
+  background: #e8ff42;
+  padding: 1rem;
+}
+
+.prediction-heading h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.prediction-heading p {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.prediction-primary {
+  margin-top: 0.8rem;
+  border: 5px solid #101010;
+  background: #ff4b1f;
+  box-shadow: 5px 5px 0 #101010;
+  padding: 0.8rem;
+  color: #fff;
+}
+
+.prediction-primary > span {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 950;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.prediction-primary strong {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: 1.25rem;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+.prediction strong {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 1.65rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.prediction-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.prediction-list strong + strong {
+  border-top: 3px solid #101010;
+  padding-top: 0.55rem;
+}
+
+.prediction-sides {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.7rem;
+}
+
+.prediction-side {
+  border: 4px solid #101010;
+  background: #fff;
+  padding: 0.75rem;
+  box-shadow: 4px 4px 0 #101010;
+}
+
+.prediction-side:nth-child(2) {
+  background: #ffed4a;
+}
+
+.prediction-side h2 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.prediction-side p {
+  margin: 0.65rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.prediction-side .prediction-scope {
+  margin-top: 0.35rem;
+  border-block: 2px solid #101010;
+  padding-block: 0.3rem;
+  font-size: clamp(0.62rem, 1.1vh, 0.72rem);
+  letter-spacing: 0.025em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.market-utility-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.market-utility-actions .action-button {
+  width: 100%;
+}
+
+/* Keep the exhibition typography bold without the extra-black weight. */
+.exchange-shell .exchange-logo,
+.exchange-shell .exchange-chip,
+.exchange-shell .new-account-button,
+.exchange-shell .post-user-copy strong,
+.exchange-shell .post h1,
+.exchange-shell .case-post-card h1 > .cn-line,
+.exchange-shell .case-top-tags .post-meta,
+.exchange-shell .case-top-tags > .label-warning,
+.exchange-shell .evidence-card h2,
+.exchange-shell .action-panel h2,
+.exchange-shell .judgement-input-rule strong,
+.exchange-shell .action-panel .action-button,
+.exchange-shell .bet-confirmation h3,
+.exchange-shell .confirm-bet-button,
+.exchange-shell .cancel-bet-button,
+.exchange-shell .feedback h2,
+.exchange-shell .next-case-button {
+  font-weight: 700;
+}
+
+.exchange-shell .action-panel {
+  padding-top: clamp(1.65rem, 2.3vw, 1.95rem);
+}
+
+.export-action-group {
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+}
+
+.export-privacy-note {
+  margin: 0;
+  border-left: 3px solid #101010;
+  background: rgb(255 255 255 / 65%);
+  padding: 0.45rem 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.export-backup-button {
+  background: #fff;
+  color: #101010;
+}
+
+.clear-data-button {
+  background: #101010;
+  color: #fff;
+}
+
+.data-import-input {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .exchange-shell,
+  .exchange-header,
+  .judgement-table,
+  .case-column,
+  .control-column,
+  .case-board,
+  .action-panel {
+    max-width: 100%;
+  }
+
+  .case-top-tags .post-meta,
+  .case-top-tags > .label-warning {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .main-grid {
+    grid-template-areas:
+      "case-status control-status"
+      "case-content case-content"
+      "control-content control-content";
+    grid-template-columns: minmax(0, 1fr) max-content;
+    column-gap: 0.85rem;
+  }
+
+  .evidence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control-status-row {
+    justify-content: flex-end;
+    justify-self: end;
+    flex-wrap: nowrap;
+  }
+
+  .exchange-header {
+    flex-wrap: wrap;
+  }
+
+  .judgement-table {
+    width: calc(100% - 1.5rem);
+    margin: 0.75rem;
+    padding: 1.5rem 0.5rem 1rem;
+  }
+
+  .case-column {
+    width: 100%;
+  }
+
+  .case-board {
+    min-height: 0;
+  }
+
+  .case-board > .next-case-button {
+    margin-top: 1rem;
+  }
+
+  .table-open-label {
+    width: max-content;
+    white-space: normal;
+  }
+
+}
+
+@media (min-width: 901px) and (min-height: 740px) {
+  .judgement-table {
+    align-content: center;
+    align-items: start;
+  }
+
+  .judgement-table > .control-column,
+  .judgement-table > .case-column {
+    align-content: start;
+    transform: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .judgement-table > .case-column {
+    min-width: 0;
+    margin-left: 0;
+    gap: 0.85rem;
+  }
+}
+
+/* Let each original image use the largest available area while its own
+   border follows the rendered image ratio instead of the full-width slot. */
+.exchange-shell .case-original-post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.exchange-shell .case-original-post img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  border: 3px solid #101010;
+  background: #fff;
+  box-shadow: 3px 3px 0 #5f5a52;
+  object-fit: contain;
+}
+
+/* Preserve the approved desktop proportions when browser zoom reduces the
+   available CSS viewport height (for example at 150%). Do not compress the
+   cards and betting controls; let the enlarged page scroll vertically. */
+@media (min-width: 901px) and (max-height: 800px) {
+  .exchange-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .exchange-shell .judgement-table {
+    flex: 0 0 auto;
+    height: 46rem;
+    min-height: 46rem;
+    overflow: visible;
+  }
+
+  .exchange-shell .case-original-post {
+    height: 12rem;
+  }
+
+  .exchange-shell .post h1 {
+    font-size: 2.9rem;
+  }
+
+  .exchange-shell .case-post-card .post-body {
+    font-size: 0.92rem;
+  }
+
+  .exchange-shell .action-panel h2 {
+    font-size: 2.75rem;
+  }
+
+  .exchange-shell .action-panel:not(:has(.bet-confirmation)) .action-button {
+    height: 3.35rem;
+    min-height: 3.35rem;
+  }
+
+  .exchange-shell .action-panel:not(:has(.bet-confirmation)) .action-buttons {
+    flex: 0 0 auto;
+    grid-template-rows: repeat(5, 3.35rem);
+    gap: 0.62rem;
+    min-height: auto;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .action-buttons {
+    flex: 0 0 auto;
+    grid-template-rows: repeat(5, 2.35rem);
+    gap: 0.58rem;
+    min-height: auto;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .action-button {
+    flex: 0 0 2.35rem;
+    height: 2.35rem;
+    min-height: 2.35rem;
+  }
+
+  .exchange-shell .judgement-table:has(.bet-confirmation) {
+    height: 50rem;
+    min-height: 50rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation {
+    flex: 0 0 128px;
+    width: 100%;
+    max-width: 100%;
+    height: 128px;
+    max-height: 128px;
+    margin: 0.5rem 0 0;
+    overflow: hidden;
+    padding: 0.28rem 0.4rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-label {
+    font-size: 0.58rem;
+    line-height: 1.05;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation h3 {
+    margin: 0.1rem 0 0.14rem;
+    font-size: 0.84rem;
+    line-height: 1;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation > p:not(.bet-confirmation-label):not(.bet-error) {
+    font-size: 0.7rem;
+    line-height: 1;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-actions {
+    gap: 0.35rem;
+    margin-top: 0.1rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .confirm-bet-button,
+  .exchange-shell .action-panel:has(.bet-confirmation) .cancel-bet-button {
+    padding: 0.1rem 0.25rem;
+    font-size: 0.62rem;
+    line-height: 1.05;
+  }
+}
+
+/* The final voucher can be taller than one viewport; never crop its lower
+   information boxes or actions with the betting screen's one-screen rule. */
+.exchange-shell.final-summary-shell {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Static final-summary shell. It deliberately reuses the prototype's existing
+   palette, outlines, offset shadows, typography, and bilingual hierarchy. */
+.final-summary-stage {
+  width: min(calc(100% - 2rem), 1500px);
+  margin: 1rem auto;
+  padding: 0.4rem;
+}
+
+@media (min-width: 901px) {
+  .final-summary-stage {
+    zoom: 0.82;
+  }
+}
+
+@media (min-width: 901px) and (min-height: 1000px) {
+  .final-summary-stage {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (min-width: 901px) and (min-height: 1200px) {
+  .final-summary-stage {
+    margin-top: 3.5rem;
+  }
+}
+
+.final-summary-title {
+  margin-bottom: 1rem;
+}
+
+.final-summary-title h1 {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  border: 4px solid #101010;
+  background: #e8ff42;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.75rem 1rem;
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.final-summary-title .cn-line {
+  margin-top: 0.35rem;
+  font-size: 0.55em;
+  letter-spacing: 0;
+}
+
+.final-summary-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(18rem, 1fr);
+  align-items: stretch;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.final-summary-main-panel,
+.final-summary-side-panel {
+  border: 4px solid #101010;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: clamp(0.85rem, 1.5vw, 1.25rem);
+}
+
+.final-summary-main-panel {
+  display: flex;
+  background: #fff;
+}
+
+.final-summary-inner-card {
+  position: relative;
+  width: 100%;
+  min-height: 28rem;
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.85rem;
+}
+
+.final-voucher-heading::before,
+.final-voucher-heading::after {
+  position: absolute;
+  bottom: 1rem;
+  z-index: 2;
+  width: 1rem;
+  height: 1rem;
+  content: "";
+  pointer-events: none;
+  transform: translateY(50%);
+}
+
+.final-voucher-heading::before {
+  left: calc(-0.85rem - 3px - 0.5rem);
+  clip-path: inset(0 0 0 50%);
+  background: radial-gradient(
+    circle at center,
+    #fff 0 0.3rem,
+    #101010 0.32rem 0.43rem,
+    transparent 0.45rem
+  );
+}
+
+.final-voucher-heading::after {
+  right: calc(-0.85rem - 3px - 0.5rem);
+  clip-path: inset(0 50% 0 0);
+  background: radial-gradient(
+    circle at center,
+    #fff 0 0.3rem,
+    #101010 0.32rem 0.43rem,
+    transparent 0.45rem
+  );
+}
+
+.final-voucher-right-notch-shadow {
+  position: absolute;
+  right: calc(-0.85rem - 6px);
+  bottom: 1rem;
+  z-index: 1;
+  width: 0.45rem;
+  height: 1rem;
+  border: 3px solid #5f5a52;
+  border-right: 0;
+  border-radius: 50% 0 0 50%;
+  background: #fff;
+  pointer-events: none;
+  transform: translateY(50%);
+}
+
+.final-voucher-heading {
+  position: relative;
+}
+
+.final-voucher-title {
+  margin: 0;
+  padding-right: 10rem;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.final-voucher-account-number {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 9rem;
+  border: 2px solid #101010;
+  background: #fff;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  text-align: left;
+}
+
+.final-voucher-account-number strong {
+  display: block;
+  font-weight: 700;
+}
+
+.final-voucher-account-number .cn-line {
+  margin-top: 0.18rem;
+  font-size: 0.72em;
+  letter-spacing: 0;
+}
+
+.final-voucher-title .cn-line {
+  margin-top: 0.3rem;
+  font-size: 0.58em;
+  letter-spacing: 0;
+}
+
+.final-voucher-title::after {
+  display: block;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 1rem;
+  left: 0.5rem;
+  width: auto;
+  margin: 0;
+  border-bottom: 3px dashed #101010;
+  content: "";
+}
+
+.final-voucher-heading {
+  padding-bottom: calc(1.85rem + 3px);
+}
+
+.final-reward-unlocked-label {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.final-reward-unlocked-label .cn-line {
+  margin-top: 0.2rem;
+  font-size: 0.72em;
+  letter-spacing: 0;
+}
+
+.final-reward-name {
+  max-width: 100%;
+  margin: 0.65rem 0 0;
+  font-size: clamp(1.8rem, 3.4vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.final-reward-name .cn-line {
+  margin-top: 0.3rem;
+  font-size: 0.58em;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.final-reward-description {
+  max-width: 42rem;
+  margin: 0.85rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.final-reward-description .cn-line {
+  margin-top: 0.25rem;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.final-betting-receipt {
+  margin-top: 0.85rem;
+  border: 3px solid #101010;
+  background: #fff;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.6rem 0.7rem;
+}
+
+.final-betting-receipt h4 {
+  margin: 0 0 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.final-betting-receipt h4 .cn-line {
+  margin-top: 0.15rem;
+  font-size: 0.72em;
+  letter-spacing: 0;
+}
+
+.final-receipt-rows {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.final-receipt-row {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-top: 2px solid #101010;
+  padding-top: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.final-receipt-row strong {
+  text-align: right;
+}
+
+.final-voucher-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.final-voucher-info-box {
+  min-width: 0;
+  border: 3px solid #101010;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.75rem;
+}
+
+.final-balance-info-box {
+  background: #f2df55;
+}
+
+.final-status-info-box {
+  background: #df4b2f;
+  color: #fff;
+}
+
+.final-voucher-info-box p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.final-voucher-info-box .cn-line {
+  margin-top: 0.2rem;
+  font-size: 0.72em;
+  letter-spacing: 0;
+}
+
+.final-voucher-info-value {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.final-voucher-info-value .cn-line {
+  font-size: 0.55em;
+}
+
+@media (max-width: 600px) {
+  .final-voucher-title {
+    padding-right: 0;
+  }
+
+  .final-voucher-account-number {
+    position: static;
+    width: fit-content;
+    margin: -0.35rem 0 0.85rem auto;
+  }
+}
+
+.final-summary-side-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.85rem;
+  background: #e8ff42;
+}
+
+.final-summary-block,
+.final-summary-statement,
+.final-summary-status-box {
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.85rem;
+}
+
+.final-reward-title {
+  background: #f2df55;
+}
+
+.final-reward-title h2 {
+  margin: 0.55rem 0 0;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.final-reward-title h2 .cn-line {
+  margin-top: 0.25rem;
+  font-size: 0.58em;
+}
+
+.final-reward-result {
+  min-height: 15rem;
+  background: #fff;
+}
+
+.final-summary-small-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.final-balance-block {
+  background: #86c8ff;
+}
+
+.final-summary-label {
+  margin: 0;
+  color: #df4b2f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.final-summary-label .cn-line,
+.final-summary-grid p .cn-line,
+.final-summary-actions .cn-line {
+  margin-top: 0.2rem;
+  font-size: 0.72em;
+}
+
+.final-summary-grid p {
+  margin: 0.55rem 0 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.final-summary-statement {
+  min-height: 11rem;
+  background: #f2df55;
+  padding: 1.15rem;
+}
+
+.final-summary-statement p:first-child {
+  margin: 0;
+  font-size: clamp(1.65rem, 2.4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+}
+
+.final-summary-statement p:first-child .cn-line {
+  margin-top: 0.35rem;
+  font-size: 0.55em;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+.final-summary-statement p + p {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.1;
+}
+
+.final-summary-statement p + p .cn-line {
+  font-size: 0.72em;
+}
+
+.final-summary-status-box {
+  display: flex;
+  align-items: center;
+  min-height: 7rem;
+  background: #fff;
+  padding: 1.1rem;
+}
+
+.final-summary-status-box p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.12;
+}
+
+.final-summary-status-box p .cn-line {
+  margin-top: 0.35rem;
+  font-size: 0.72em;
+}
+
+.final-summary-status-box .final-summary-status-uppercase {
+  text-transform: uppercase;
+}
+
+.final-summary-actions {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0;
+}
+
+.final-summary-actions button {
+  width: 100%;
+  border: 3px solid #101010;
+  background: #df4b2f;
+  box-shadow: 3px 3px 0 #5f5a52;
+  min-height: 4.5rem;
+  padding: 0.9rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.final-summary-actions button:last-child {
+  background: #fff;
+  color: #101010;
+}
+
+.final-summary-actions .society-exit-button {
+  position: relative;
+}
+
+.final-summary-actions .society-exit-button.is-blocked {
+  cursor: not-allowed;
+}
+
+.final-summary-actions .society-exit-button.is-blocked::after {
+  position: absolute;
+  top: 50%;
+  left: -0.25rem;
+  z-index: 2;
+  width: calc(100% + 0.5rem);
+  box-sizing: border-box;
+  border: 3px solid #ff4b1f;
+  background: rgb(243 223 189 / 92%);
+  color: #101010;
+  content: "EXIT DENIED\A退出被拒绝";
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.05;
+  opacity: 0.7;
+  padding: 0.38rem 0.6rem;
+  pointer-events: none;
+  text-align: center;
+  transform: translateY(-50%) rotate(-4deg);
+  white-space: pre-line;
+}
+
+.final-summary-save-button {
+  grid-column: 1;
+  justify-self: end;
+  width: min(100%, 16rem);
+  margin-top: -0.5rem;
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 3px 3px 0 #5f5a52;
+  padding: 0.75rem 1rem;
+  color: #101010;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.final-summary-save-button .cn-line {
+  margin-top: 0.2rem;
+  font-size: 0.72em;
+}
+
+.final-summary-save-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.game-over-tape-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: all;
+}
+
+.game-over-tape {
+  --from-x: 0;
+  --from-y: 0;
+  --to-x: 0;
+  --to-y: 0;
+  position: absolute;
+  top: var(--tape-top);
+  left: -30vw;
+  display: flex;
+  align-items: center;
+  width: 160vw;
+  min-height: 5rem;
+  border: 5px solid #ff4b1f;
+  background: rgb(243 223 189 / 92%);
+  opacity: 0.78;
+  box-shadow: 5px 5px 0 rgb(16 16 16 / 70%);
+  animation: game-over-tape-sweep var(--tape-duration) cubic-bezier(0.2, 0.75, 0.25, 1) var(--tape-delay) both;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.game-over-tape.from-left {
+  --from-x: -170vw;
+  --to-x: 170vw;
+}
+
+.game-over-tape.from-right {
+  --from-x: 170vw;
+  --to-x: -170vw;
+}
+
+.game-over-tape.from-top {
+  --from-y: -120vh;
+  --to-y: 120vh;
+}
+
+.game-over-tape.from-bottom {
+  --from-y: 120vh;
+  --to-y: -120vh;
+}
+
+.game-over-tape.from-top-left {
+  --from-x: -150vw;
+  --from-y: -110vh;
+  --to-x: 150vw;
+  --to-y: 110vh;
+}
+
+.game-over-tape.from-top-right {
+  --from-x: 150vw;
+  --from-y: -110vh;
+  --to-x: -150vw;
+  --to-y: 110vh;
+}
+
+.game-over-tape.from-bottom-left {
+  --from-x: -150vw;
+  --from-y: 110vh;
+  --to-x: 150vw;
+  --to-y: -110vh;
+}
+
+.game-over-tape.from-bottom-right {
+  --from-x: 150vw;
+  --from-y: 110vh;
+  --to-x: -150vw;
+  --to-y: -110vh;
+}
+
+.game-over-tape-copy {
+  width: 100%;
+  overflow: hidden;
+  padding: 0.45rem 1.25rem;
+  color: #101010;
+  font-family: inherit;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.game-over-tape-copy strong,
+.game-over-tape-copy span {
+  display: block;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.game-over-tape-copy strong {
+  font-size: clamp(1rem, 2vw, 1.8rem);
+  font-weight: 700;
+}
+
+.game-over-tape-copy span {
+  margin-top: 0.3rem;
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  font-weight: 700;
+}
+
+@keyframes game-over-tape-sweep {
+  0% {
+    transform: translate3d(var(--from-x), var(--from-y), 0) rotate(var(--tape-angle));
+  }
+
+  18%,
+  80% {
+    transform: translate3d(0, 0, 0) rotate(var(--tape-angle));
+  }
+
+  100% {
+    transform: translate3d(var(--to-x), var(--to-y), 0) rotate(var(--tape-angle));
+  }
+}
+
+@keyframes game-over-tape-reduced {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(var(--tape-angle));
+  }
+
+  15%,
+  85% {
+    opacity: 0.78;
+    transform: translate3d(0, 0, 0) rotate(var(--tape-angle));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-over-tape {
+    animation: game-over-tape-reduced 1200ms ease both;
+  }
+}
+
+@media (max-width: 900px) {
+  .final-summary-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .final-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .final-summary-small-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .final-summary-main-panel {
+    order: 1;
+  }
+
+  .final-summary-save-button {
+    order: 2;
+  }
+
+  .final-summary-side-panel {
+    order: 3;
+  }
+}
+
+/* Keep the confirmation card directly below the selected betting option. */
+.exchange-shell .action-panel:has(.bet-confirmation) .action-buttons {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.58rem;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .action-buttons
+  > .bet-confirmation {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .bet-confirmation
+  .settlement-result-view {
+  display: grid;
+  height: 100%;
+  align-content: start;
+  gap: 0.24rem;
+  overflow-y: auto;
+  padding-right: 0.12rem;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .bet-confirmation
+  .settlement-result-view
+  p,
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .bet-confirmation
+  .settlement-result-view
+  h3 {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.1;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .bet-confirmation
+  .settlement-result-view
+  h3 {
+  font-size: 0.74rem;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .settlement-result-view
+  .bet-confirmation-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .settlement-result-view
+  .settlement-processed-copy {
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.exchange-shell
+  .action-panel:has(.bet-confirmation)
+  .settlement-result-view
+  .cn-line {
+  margin-top: 0.08rem;
+  font-size: 0.78em;
+  line-height: 1.1;
+}
+
+.exchange-shell .settlement-next-button {
+  width: 100%;
+  margin-top: 0.12rem;
+  cursor: pointer;
+  border: 2px solid #101010;
+  background: #86c8ff;
+  padding: 0.24rem 0.3rem;
+  color: #101010;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Lock the desktop case/betting column ratio to the approved 1.65:1 layout. */
+@media (min-width: 901px) {
+  .exchange-shell .main-grid {
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  }
+
+  .exchange-shell .judgement-table {
+    width: calc(100% - 2rem);
+    max-width: 1000px;
+  }
+}
+
+/* At desktop browser zoom levels such as 150%, preserve the approved desktop
+   component proportions instead of squeezing everything into the reduced
+   CSS viewport height. The enlarged interface may scroll vertically. */
+@media (min-width: 901px) and (max-height: 700px) {
+  .exchange-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .exchange-shell .judgement-table {
+    flex: 0 0 auto;
+    height: 46rem;
+    min-height: 46rem;
+    overflow: visible;
+  }
+
+  .exchange-shell .case-original-post {
+    height: 12rem;
+  }
+
+  .exchange-shell .post h1 {
+    font-size: 2.9rem;
+  }
+
+  .exchange-shell .case-post-card .post-body {
+    font-size: 0.92rem;
+  }
+
+  .exchange-shell .action-panel h2 {
+    font-size: 2.75rem;
+  }
+
+  .exchange-shell
+    .action-panel:not(:has(.bet-confirmation))
+    .action-button {
+    min-height: 4rem;
+  }
+}
+
+/* Keep longer bilingual post copy inside the fixed-height exhibition card. */
+@media (min-width: 901px) {
+  .exchange-shell .case-post-card .post-body {
+    font-size: clamp(0.82rem, 1.55vh, 0.92rem);
+    line-height: 1.18;
+  }
+
+  .exchange-shell .case-post-card .post-body > .cn-line {
+    margin-top: 0.12rem;
+    font-size: 0.74em;
+    line-height: 1.2;
+  }
+}
+
+/* Compact only the selected-bet confirmation card. */
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation {
+  width: 100%;
+  max-width: 100%;
+  height: 128px;
+  max-height: 128px;
+  margin: 0.5rem 0 0;
+  overflow: hidden;
+  padding: 0.28rem 0.4rem;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-label {
+  font-size: 0.58rem;
+  line-height: 1.05;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation h3 {
+  margin: 0.1rem 0 0.14rem;
+  font-size: 0.84rem;
+  line-height: 1;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation h3 .cn-line {
+  margin-top: 0.12rem;
+  font-size: 0.7em;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation > p:not(.bet-confirmation-label):not(.bet-error) {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-actions {
+  gap: 0.35rem;
+  margin-top: 0.1rem;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .confirm-bet-button,
+.exchange-shell .action-panel:has(.bet-confirmation) .cancel-bet-button {
+  padding: 0.1rem 0.25rem;
+  font-size: 0.62rem;
+  line-height: 1.05;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) .confirm-bet-button .cn-line,
+.exchange-shell .action-panel:has(.bet-confirmation) .cancel-bet-button .cn-line {
+  margin-top: 0.1rem;
+  font-size: 0.72em;
+}
+
+/* Always leave a visible lime gutter around the System Response card. */
+.exchange-shell .action-panel > .feedback {
+  align-self: flex-start;
+  width: calc(100% - 1.5rem);
+  max-width: calc(100% - 1.5rem);
+  margin: 1.35rem 0.75rem 1rem;
+}
+
+@media (min-width: 1200px) {
+  .main-grid {
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    column-gap: clamp(1.4rem, 2vw, 2.25rem);
+  }
+
+  .post h1 {
+    font-size: clamp(3.2rem, 3.8vw, 5.2rem);
+  }
+}
+
+@media (min-width: 1200px) and (min-height: 760px) {
+  .judgement-table {
+    width: calc(100% - 3rem);
+    max-width: 1500px;
+    margin: 1rem auto;
+    padding: 0.9rem 0.5rem 1.25rem;
+  }
+
+  .main-grid {
+    grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+    align-items: stretch;
+    column-gap: clamp(1.25rem, 1.8vw, 2rem);
+  }
+
+  .case-column,
+  .control-column {
+    align-self: stretch;
+  }
+
+  .case-board {
+    min-height: 0;
+    padding: clamp(1.35rem, 1.7vw, 1.8rem);
+  }
+
+  .case-original-post {
+    height: clamp(22rem, 37vh, 29rem);
+  }
+
+  .post h1 {
+    max-width: 17ch;
+    font-size: clamp(3.5rem, 4.2vw, 5.7rem);
+  }
+
+  .post-body {
+    font-size: clamp(1.2rem, 1.3vw, 1.45rem);
+  }
+
+  .action-panel {
+    padding: 0.9rem;
+  }
+
+  .action-panel h2 {
+    font-size: clamp(2.6rem, 2.8vw, 3.6rem);
+  }
+
+  .action-buttons {
+    gap: 0.85rem;
+  }
+
+  .action-panel .action-button {
+    min-height: 5.65rem;
+    font-size: 1.4rem;
+  }
+
+  .action-panel > .feedback {
+    min-height: 0;
+    padding: 0.9rem;
+  }
+
+  .feedback-message {
+    font-size: 1.45rem;
+  }
+}
+
+/* Large-display layout for common 27–32 inch monitor resolutions.
+   The page remains scrollable; these rules only use extra screen width. */
+/* Keep the complete two-panel interface visible at 100% browser zoom on
+   wide exhibition screens with limited vertical space (for example 1920x900). */
+@media (min-width: 1200px) {
+  .exchange-shell > .exchange-header {
+    padding-block: 0.6rem 0.7rem;
+  }
+
+  .exchange-fake-nav span {
+    padding: 0.45rem 0.72rem;
+    font-size: 0.95rem;
+  }
+
+  .judgement-table {
+    margin: 0.65rem auto;
+    padding-block: 0.45rem 0.65rem;
+    row-gap: 0.65rem;
+  }
+
+  .case-status-row .exchange-chip,
+  .control-status-row .exchange-chip {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .control-status-row .new-account-button {
+    margin-top: 0.25rem;
+    padding: 0.2rem 0.3rem;
+    font-size: 0.58rem;
+  }
+
+  .case-board {
+    padding: 0.9rem;
+  }
+
+  .case-top-tags {
+    margin-bottom: 0.55rem;
+  }
+
+  .case-top-tags .post-meta,
+  .case-top-tags > .label-warning {
+    padding: 0.38rem 0.55rem;
+    font-size: 0.82rem;
+  }
+
+  .case-post-card {
+    padding: 0.8rem;
+  }
+
+  .post-user-row {
+    padding-bottom: 0.5rem;
+  }
+
+  .post-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .case-original-post {
+    height: clamp(12.5rem, 26vh, 15rem);
+    margin: 0.55rem 0 0.65rem;
+  }
+
+  .post h1 {
+    margin: 0.55rem 0 0.45rem;
+    font-size: clamp(2.5rem, 5vh, 3.2rem);
+    line-height: 0.92;
+  }
+
+  .post-body {
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .case-post-card .post-body > .cn-line {
+    margin-top: 0.3rem;
+    line-height: 1.35;
+  }
+
+  .case-board > .evidence-grid {
+    margin-top: 0.55rem;
+  }
+
+  .case-board .case-reality-card {
+    padding: 0.5rem 0.65rem;
+  }
+
+  .case-reality-card .reality-line {
+    font-size: clamp(0.75rem, 1.3cqw, 0.86rem);
+  }
+
+  .case-board > .next-case-button {
+    margin-top: 0.55rem;
+  }
+
+  .next-case-button {
+    padding: 0.55rem 1rem;
+  }
+
+  .next-post-main {
+    font-size: 1.05rem;
+  }
+
+  .next-post-preview {
+    font-size: 0.68rem;
+  }
+
+  .exchange-shell .action-panel {
+    padding: 0.9rem;
+    padding-top: 1rem;
+  }
+
+  .action-panel h2 {
+    margin-bottom: 0.55rem;
+    font-size: 2.45rem;
+  }
+
+  .judgement-input-rule {
+    margin-bottom: 0.55rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .judgement-input-rule p {
+    font-size: 0.9rem;
+  }
+
+  .action-buttons {
+    gap: 0.55rem;
+  }
+
+  .action-panel .action-button {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    min-height: 4.2rem;
+    gap: 0.75rem;
+    padding: 0.55rem 0.75rem;
+    font-size: 1.2rem;
+  }
+
+  .action-panel .action-button .cn-line {
+    margin-top: 0.2rem;
+    font-size: 0.78rem;
+  }
+
+  .bet-token {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .action-panel > .feedback {
+    margin-top: 0.65rem;
+    padding: 0.65rem;
+  }
+
+  .feedback-message {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .market-page {
+    width: min(92vw, 1120px);
+  }
+
+  .market-page .exchange-header {
+    padding: 1rem 1.35rem;
+  }
+
+  .market-content {
+    gap: 1.25rem;
+    padding: 1.4rem;
+  }
+
+  .index-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .index-row:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .index-row {
+    padding: 0.85rem;
+  }
+
+  .movement-board {
+    height: 9rem;
+  }
+
+  .log-list {
+    max-height: 15rem;
+  }
+
+  .prediction-sides {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .prediction-side {
+    padding: 1rem;
+  }
+
+  .market-page > .market-content > .action-button {
+    width: 100%;
+  }
+
+  .market-utility-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1500px) {
+  .market-page {
+    width: min(82vw, 1380px);
+  }
+
+  .market-content {
+    gap: 1.5rem;
+    padding: 1.7rem;
+  }
+
+  .index-list {
+    gap: 1rem;
+  }
+
+  .index-name {
+    font-size: 1.05rem;
+  }
+
+  .index-value {
+    font-size: 1.6rem;
+  }
+
+  .movement-board {
+    height: 11rem;
+  }
+
+  .warning-box p,
+  .prediction-primary strong {
+    font-size: 1.45rem;
+  }
+
+  .prediction-side p {
+    font-size: 1.12rem;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  .post h1 {
+    font-size: 2.8rem;
+  }
+}
+
+/* One-screen exhibition layout at 100% browser zoom. */
+@media (min-width: 901px) {
+  .exchange-shell {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .exchange-shell > .exchange-header {
+    padding: 0.5rem clamp(1rem, 2vw, 2rem) 0.6rem;
+  }
+
+  .exchange-fake-nav {
+    gap: 0.65rem;
+  }
+
+  .exchange-fake-nav span {
+    padding: 0.42rem 0.68rem;
+    font-size: clamp(0.82rem, 1vw, 0.95rem);
+  }
+
+  .judgement-table {
+    flex: 1 1 auto;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: min(calc(100% - 2rem), 1500px);
+    height: auto;
+    min-height: 0;
+    margin: 0.45rem auto;
+    padding: 0.35rem 0.4rem 0.55rem;
+    row-gap: 0.55rem;
+    overflow: hidden;
+  }
+
+  .case-status-row,
+  .control-status-row {
+    min-height: 0;
+  }
+
+  .case-status-row .exchange-chip,
+  .control-status-row .exchange-chip {
+    padding: 0.38rem 0.52rem;
+    font-size: 0.72rem;
+  }
+
+  .control-status-row {
+    gap: 0.6rem;
+  }
+
+  .control-status-row .new-account-button {
+    margin-top: 0.18rem;
+    padding: 0.16rem 0.25rem;
+    font-size: 0.54rem;
+  }
+
+  .case-column,
+  .control-column,
+  .case-column > .case-board,
+  .control-column > .action-panel {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .case-column,
+  .control-column {
+    overflow: hidden;
+  }
+
+  .case-board {
+    overflow: hidden;
+    padding: clamp(0.65rem, 1.1vh, 0.85rem);
+  }
+
+  .case-top-tags {
+    flex: 0 0 auto;
+    gap: 0.45rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .case-top-tags .post-meta,
+  .case-top-tags > .label-warning {
+    padding: 0.3rem 0.45rem;
+    font-size: clamp(0.68rem, 1.25vh, 0.8rem);
+  }
+
+  .case-post-card {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: clamp(0.55rem, 1vh, 0.75rem);
+    overflow: hidden;
+  }
+
+  .post-user-row {
+    gap: 0.55rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .post-avatar {
+    width: clamp(2rem, 4.5vh, 2.5rem);
+    height: clamp(2rem, 4.5vh, 2.5rem);
+  }
+
+  .post-user-copy strong {
+    font-size: 0.88rem;
+  }
+
+  .post-user-copy > span {
+    font-size: 0.66rem;
+  }
+
+  .case-original-post {
+    height: clamp(9.5rem, 22vh, 13rem);
+    margin: 0.42rem 0 0.5rem;
+    border-width: 4px;
+    box-shadow: 4px 4px 0 #101010;
+  }
+
+  .post h1 {
+    margin: 0.42rem 0 0.35rem;
+    font-size: clamp(2.15rem, 5.2vh, 3rem);
+    line-height: 0.92;
+  }
+
+  .case-post-card h1 > .cn-line {
+    margin-top: 0.2rem;
+  }
+
+  .post-body {
+    font-size: clamp(0.88rem, 1.75vh, 1rem);
+    line-height: 1.25;
+  }
+
+  .case-post-card .post-body > .cn-line {
+    margin-top: 0.2rem;
+    line-height: 1.3;
+  }
+
+  .case-board > .evidence-grid {
+    flex: 0 0 auto;
+    margin-top: 0.42rem;
+  }
+
+  .case-board .case-reality-card {
+    padding: 0.38rem 0.5rem;
+  }
+
+  .case-reality-card .reality-line {
+    font-size: clamp(0.68rem, 1.35vh, 0.8rem);
+    line-height: 1.2;
+  }
+
+  .case-board > .next-case-button {
+    margin-top: 0.42rem;
+  }
+
+  .next-case-button {
+    padding: 0.42rem 0.75rem;
+  }
+
+  .next-post-main {
+    font-size: 0.95rem;
+  }
+
+  .next-post-preview {
+    padding-top: 0.2rem;
+    font-size: 0.6rem;
+  }
+
+  .exchange-shell .action-panel {
+    overflow: hidden;
+    padding: clamp(0.65rem, 1.1vh, 0.85rem);
+    padding-top: clamp(0.75rem, 1.4vh, 1rem);
+  }
+
+  .action-panel h2 {
+    margin-bottom: 0.55rem;
+    font-size: clamp(2.05rem, 5.2vh, 2.75rem);
+  }
+
+  .judgement-input-rule {
+    margin-bottom: 0.65rem;
+    padding: 0.36rem 0.5rem;
+  }
+
+  .judgement-input-rule p {
+    font-size: clamp(0.78rem, 1.65vh, 0.9rem);
+  }
+
+  .action-buttons {
+    gap: clamp(0.62rem, 1.15vh, 0.72rem);
+  }
+
+  .action-panel .action-button {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    min-height: clamp(3.35rem, 7.2vh, 4rem);
+    gap: 0.65rem;
+    padding: 0.42rem 0.65rem;
+    font-size: clamp(1rem, 2.2vh, 1.18rem);
+  }
+
+  .action-panel .action-button .cn-line {
+    margin-top: 0.15rem;
+    font-size: clamp(0.68rem, 1.45vh, 0.76rem);
+  }
+
+  .bet-token {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.58rem;
+  }
+
+  .bet-token small {
+    font-size: 0.5rem;
+  }
+
+  .action-panel > .feedback {
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .feedback h2 {
+    margin-bottom: 0.28rem;
+    font-size: 0.72rem;
+  }
+
+  .feedback-message {
+    font-size: clamp(0.92rem, 2vh, 1.08rem);
+  }
+
+  .feedback-detail {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .action-panel:has(.bet-confirmation) .action-buttons {
+    gap: 0.58rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .action-button {
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    min-height: 2.35rem;
+    gap: 0.5rem;
+    padding: 0.22rem 0.5rem;
+    font-size: 0.94rem;
+  }
+
+  .action-panel:has(.bet-confirmation) h2 {
+    margin-bottom: 0.3rem;
+    font-size: clamp(1.75rem, 3.8vh, 2rem);
+    line-height: 0.88;
+  }
+
+  .action-panel:has(.bet-confirmation) .judgement-input-rule {
+    margin-bottom: 0.3rem;
+    padding: 0.28rem 0.4rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .judgement-input-rule p {
+    font-size: 0.75rem;
+    line-height: 1.1;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-token {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-width: 2px;
+    font-size: 0.48rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-token small {
+    font-size: 0.42rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .action-button .cn-line {
+    margin-top: 0.08rem;
+    font-size: 0.62rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-confirmation {
+    flex: 0 0 auto;
+    width: calc(100% - 0.5rem);
+    max-width: calc(100% - 0.5rem);
+    height: auto;
+    max-height: none;
+    box-sizing: border-box;
+    margin-top: 0.72rem;
+    margin-right: 0.5rem;
+    overflow: visible;
+    padding: 0.45rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-confirmation h3 {
+    margin: 0.2rem 0 0.35rem;
+    font-size: 1.05rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-risk-note {
+    margin-top: 0.3rem !important;
+  }
+
+  .action-panel:has(.bet-confirmation) .bet-confirmation-actions {
+    margin-top: 0.4rem;
+  }
+
+  .action-panel:has(.bet-confirmation) .confirm-bet-button,
+  .action-panel:has(.bet-confirmation) .cancel-bet-button {
+    padding: 0.45rem;
+    font-size: 0.82rem;
+  }
+
+  .action-panel:has(.bet-confirmation) > .feedback {
+    flex-shrink: 1;
+    max-height: 72px;
+    margin-top: 0.72rem;
+    padding: 0.4rem;
+  }
+
+  .action-panel:has(.bet-confirmation) > .feedback .feedback-status {
+    margin-bottom: 0.25rem;
+    font-size: 0.6rem;
+  }
+
+  .action-panel:has(.bet-confirmation) > .feedback .feedback-message {
+    font-size: 0.82rem;
+  }
+
+  .action-panel:has(.bet-confirmation) > .feedback .feedback-detail {
+    margin-top: 0.25rem;
+    font-size: 0.58rem;
+  }
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) > .feedback {
+  width: calc(100% - 2rem);
+  max-width: calc(100% - 2rem);
+  max-height: 64px;
+  margin: 1rem;
+}
+
+/* Use a clear lime gutter around the response card in every state. */
+.exchange-shell .action-panel > .feedback {
+  width: 100%;
+  max-width: 100%;
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px;
+  margin: auto 0 0;
+}
+
+.exchange-shell .action-panel:has(.bet-confirmation) > .feedback {
+  width: 100%;
+  max-width: 100%;
+  height: 82px;
+  min-height: 82px;
+  max-height: 82px;
+  margin: 0.5rem 0 0;
+}
+
+/* Narrow the heavy black offset shadows without changing the block style. */
+.exchange-shell .exchange-chip,
+.exchange-shell .panel,
+.exchange-shell .case-board,
+.exchange-shell .case-post-card,
+.exchange-shell .case-original-post,
+.exchange-shell .post-avatar,
+.exchange-shell .action-button,
+.exchange-shell .bet-confirmation,
+.exchange-shell .confirm-bet-button,
+.exchange-shell .cancel-bet-button,
+.exchange-shell .next-case-button,
+.exchange-shell .new-account-button,
+.exchange-shell .case-top-tags .post-meta,
+.exchange-shell .case-top-tags > .label-warning {
+  box-shadow: 3px 3px 0 #5f5a52;
+}
+
+.exchange-shell .bet-token {
+  box-shadow: none;
+}
+
+.exchange-shell .action-button:hover,
+.exchange-shell .action-button:focus-visible,
+.exchange-shell .next-case-button:hover,
+.exchange-shell .next-case-button:focus-visible,
+.exchange-shell .confirm-bet-button:hover,
+.exchange-shell .confirm-bet-button:focus-visible,
+.exchange-shell .cancel-bet-button:hover,
+.exchange-shell .cancel-bet-button:focus-visible {
+  box-shadow: 4px 4px 0 #5f5a52;
+}
+
+/* Slightly lighter black outlines across the audience interaction screen. */
+.exchange-shell > .exchange-header {
+  border-bottom-width: 4px;
+}
+
+.exchange-shell .panel,
+.exchange-shell .case-post-card,
+.exchange-shell .judgement-input-rule,
+.exchange-shell .action-panel .action-button,
+.exchange-shell .bet-confirmation {
+  border-width: 4px;
+}
+
+.exchange-shell .case-top-tags .post-meta,
+.exchange-shell .case-top-tags > .label-warning,
+.exchange-shell .exchange-fake-nav span,
+.exchange-shell .exchange-chip,
+.exchange-shell .post-avatar,
+.exchange-shell .case-original-post,
+.exchange-shell .case-reality-card,
+.exchange-shell .next-case-button {
+  border-width: 3px;
+}
+
+.exchange-shell .bet-token,
+.exchange-shell .new-account-button,
+.exchange-shell .confirm-bet-button,
+.exchange-shell .cancel-bet-button {
+  border-width: 2px;
+}
+
+.exchange-shell .post-user-row {
+  border-bottom-width: 3px;
+}
+
+/* Anchor System Response to the same bottom baseline as the blue Next Post
+   button, while reserving space so other right-panel content cannot overlap. */
+@media (min-width: 901px) {
+  .exchange-shell .action-panel {
+    --action-panel-inset: clamp(0.65rem, 1.1vh, 0.85rem);
+    position: relative;
+    padding-bottom: calc(90px + var(--action-panel-inset) + 0.75rem);
+  }
+
+  .exchange-shell .action-panel > .feedback,
+  .exchange-shell .action-panel:has(.bet-confirmation) > .feedback {
+    position: absolute;
+    right: var(--action-panel-inset);
+    bottom: var(--action-panel-inset);
+    left: var(--action-panel-inset);
+    width: auto;
+    max-width: none;
+    height: 90px;
+    min-height: 90px;
+    max-height: 90px;
+    margin: 0;
+  }
+
+  .exchange-shell .action-panel:not(:has(.bet-confirmation)) .action-buttons {
+    flex: 1 1 auto;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+    min-height: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .exchange-shell
+    .action-panel:not(:has(.bet-confirmation))
+    .action-button {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+.exchange-shell .case-original-post {
+  overflow: visible;
+  border: 0;
+  box-shadow: none;
+}
+
+.exchange-shell .case-original-post img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border: 3px solid #101010;
+  box-shadow: 3px 3px 0 #5f5a52;
+  object-fit: contain;
+}
+
+/* Preserve the approved desktop proportions when browser zoom reduces the
+   available CSS viewport height (from approximately 125%). Do not compress
+   the cards and betting controls; let the enlarged page scroll vertically. */
+@media (min-width: 901px) and (max-height: 800px) {
+  .exchange-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .exchange-shell .judgement-table {
+    flex: 0 0 auto;
+    height: 46rem;
+    min-height: 46rem;
+    overflow: visible;
+  }
+
+  .exchange-shell .case-original-post {
+    height: 12rem;
+  }
+
+  .exchange-shell .post h1 {
+    font-size: 2.9rem;
+  }
+
+  .exchange-shell .case-post-card .post-body {
+    font-size: 0.92rem;
+  }
+
+  .exchange-shell .action-panel h2 {
+    font-size: 2.75rem;
+  }
+
+  .exchange-shell .action-panel:not(:has(.bet-confirmation)) .action-button {
+    height: 3.35rem;
+    min-height: 3.35rem;
+  }
+
+  .exchange-shell .action-panel:not(:has(.bet-confirmation)) .action-buttons {
+    flex: 0 0 auto;
+    grid-template-rows: repeat(5, 3.35rem);
+    gap: 0.62rem;
+    min-height: auto;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .action-buttons {
+    flex: 0 0 auto;
+    grid-template-rows: repeat(5, 2.35rem);
+    gap: 0.58rem;
+    min-height: auto;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .action-button {
+    flex: 0 0 2.35rem;
+    height: 2.35rem;
+    min-height: 2.35rem;
+  }
+
+  .exchange-shell .judgement-table:has(.bet-confirmation) {
+    height: 50rem;
+    min-height: 50rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation {
+    flex: 0 0 128px;
+    width: 100%;
+    max-width: 100%;
+    height: 128px;
+    max-height: 128px;
+    margin: 0.5rem 0 0;
+    overflow: hidden;
+    padding: 0.28rem 0.4rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-label {
+    font-size: 0.58rem;
+    line-height: 1.05;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation h3 {
+    margin: 0.1rem 0 0.14rem;
+    font-size: 0.84rem;
+    line-height: 1;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation > p:not(.bet-confirmation-label):not(.bet-error) {
+    font-size: 0.7rem;
+    line-height: 1;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation-actions {
+    gap: 0.35rem;
+    margin-top: 0.1rem;
+  }
+
+  .exchange-shell .action-panel:has(.bet-confirmation) .confirm-bet-button,
+  .exchange-shell .action-panel:has(.bet-confirmation) .cancel-bet-button {
+    padding: 0.1rem 0.25rem;
+    font-size: 0.62rem;
+    line-height: 1.05;
+  }
+}
