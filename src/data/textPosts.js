@@ -1,7 +1,7 @@
 export const textPosts = [
   {
     id: "text-01",
-    image: "/images/text/text-1.png",
+    image: "/images/text/text-1.webp",
     category: "Text Post",
     cnCategory: "文字内容",
     title: "news about AI labels gets labelled as AI",
@@ -16,7 +16,7 @@ export const textPosts = [
   },
   {
     id: "text-02",
-    image: "/images/text/text-2.png",
+    image: "/images/text/text-2.webp",
     category: "Platform Rule",
     cnCategory: "平台规则",
     title: "the rule explains nothing",
@@ -31,7 +31,7 @@ export const textPosts = [
   },
   {
     id: "text-03",
-    image: "/images/text/text-3.png",
+    image: "/images/text/text-3.webp",
     category: "User Complaint",
     cnCategory: "用户吐槽",
     title: "my own words were called AI",
@@ -46,7 +46,7 @@ export const textPosts = [
   },
   {
     id: "text-04",
-    image: "/images/text/text-4.png",
+    image: "/images/text/text-4.webp",
     category: "AI Tutorial",
     cnCategory: "AI 教程",
     title: "AI writing tutorial has no warning",
@@ -61,7 +61,7 @@ export const textPosts = [
   },
   {
     id: "text-05",
-    image: "/images/text/text-5.png",
+    image: "/images/text/text-5.webp",
     category: "News Report",
     cnCategory: "新闻报道",
     title: "the report becomes the thing it reports",
@@ -76,7 +76,7 @@ export const textPosts = [
   },
   {
     id: "text-06",
-    image: "/images/text/text-6.png",
+    image: "/images/text/text-6.webp",
     category: "Review",
     cnCategory: "评论",
     title: "a careful review looks machine-made",
@@ -91,7 +91,7 @@ export const textPosts = [
   },
   {
     id: "text-07",
-    image: "/images/text/text-7.png",
+    image: "/images/text/text-7.webp",
     category: "Messy Post",
     cnCategory: "混乱帖子",
     title: "bad grammar becomes proof of being human",
@@ -106,7 +106,7 @@ export const textPosts = [
   },
   {
     id: "text-08",
-    image: "/images/text/text-8.png",
+    image: "/images/text/text-8.webp",
     category: "Official Notice",
     cnCategory: "官方通知",
     title: "official language sounds like AI",
@@ -121,7 +121,7 @@ export const textPosts = [
   },
   {
     id: "text-09",
-    image: "/images/text/text-9.png",
+    image: "/images/text/text-9.webp",
     category: "AI Confession",
     cnCategory: "AI 声明",
     title: "this was written with AI, but no one cares",
@@ -136,7 +136,7 @@ export const textPosts = [
   },
   {
     id: "text-10",
-    image: "/images/text/text-10.png",
+    image: "/images/text/text-10.webp",
     category: "Appeal Text",
     cnCategory: "申诉文字",
     title: "the appeal is also suspicious",

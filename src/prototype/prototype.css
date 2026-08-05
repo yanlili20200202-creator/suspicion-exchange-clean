@@ -2594,8 +2594,8 @@ button {
 
   .exchange-shell .judgement-table {
     flex: 0 0 auto;
-    height: 46rem;
-    min-height: 46rem;
+    height: 50rem;
+    min-height: 50rem;
     overflow: visible;
   }
 
@@ -2638,11 +2638,6 @@ button {
     flex: 0 0 2.35rem;
     height: 2.35rem;
     min-height: 2.35rem;
-  }
-
-  .exchange-shell .judgement-table:has(.bet-confirmation) {
-    height: 50rem;
-    min-height: 50rem;
   }
 
   .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation {
@@ -4465,8 +4460,8 @@ button {
 
   .exchange-shell .judgement-table {
     flex: 0 0 auto;
-    height: 46rem;
-    min-height: 46rem;
+    height: 50rem;
+    min-height: 50rem;
     overflow: visible;
   }
 
@@ -4509,11 +4504,6 @@ button {
     flex: 0 0 2.35rem;
     height: 2.35rem;
     min-height: 2.35rem;
-  }
-
-  .exchange-shell .judgement-table:has(.bet-confirmation) {
-    height: 50rem;
-    min-height: 50rem;
   }
 
   .exchange-shell .action-panel:has(.bet-confirmation) .bet-confirmation {

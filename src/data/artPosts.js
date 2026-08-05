@@ -1,7 +1,7 @@
 export const artPosts = [
   {
     id: "art-01",
-    image: "/images/art/art-1.png",
+    image: "/images/art/art-1.webp",
     category: "Original Art",
     cnCategory: "原创绘画",
     title: "hand-drawn work marked as AI",
@@ -16,7 +16,7 @@ export const artPosts = [
   },
   {
     id: "art-02",
-    image: "/images/art/art-2.jpg",
+    image: "/images/art/art-2.webp",
     category: "Painting Process",
     cnCategory: "绘画过程",
     title: "the final image is doubted",
@@ -31,7 +31,7 @@ export const artPosts = [
   },
   {
     id: "art-03",
-    image: "/images/art/art-3.png",
+    image: "/images/art/art-3.webp",
     category: "Fan Art",
     cnCategory: "同人图",
     title: "fan art becomes suspicious",
@@ -46,7 +46,7 @@ export const artPosts = [
   },
   {
     id: "art-04",
-    image: "/images/art/art-4.jpg",
+    image: "/images/art/art-4.webp",
     category: "Old Painting",
     cnCategory: "旧绘画",
     title: "an old painting is judged like AI",
@@ -61,7 +61,7 @@ export const artPosts = [
   },
   {
     id: "art-05",
-    image: "/images/art/art-5.jpg",
+    image: "/images/art/art-5.webp",
     category: "Sketch",
     cnCategory: "草图",
     title: "even a sketch needs proof",
@@ -76,7 +76,7 @@ export const artPosts = [
   },
   {
     id: "art-06",
-    image: "/images/art/art-6.jpg",
+    image: "/images/art/art-6.webp",
     category: "AI Wallpaper",
     cnCategory: "AI 壁纸",
     title: "AI wallpaper passes as normal",
@@ -91,7 +91,7 @@ export const artPosts = [
   },
   {
     id: "art-07",
-    image: "/images/art/art-7.png",
+    image: "/images/art/art-7.webp",
     category: "Artist Statement",
     cnCategory: "艺术家声明",
     title: "do not merge my drawing with AI",
@@ -106,7 +106,7 @@ export const artPosts = [
   },
   {
     id: "art-08",
-    image: "/images/art/art-8.png",
+    image: "/images/art/art-8.webp",
     category: "Board Drawing",
     cnCategory: "板绘作品",
     title: "too smooth to be human",
@@ -121,7 +121,7 @@ export const artPosts = [
   },
   {
     id: "art-09",
-    image: "/images/art/art-9.png",
+    image: "/images/art/art-9.webp",
     category: "Art School Work",
     cnCategory: "艺术作业",
     title: "student work enters the grey zone",
@@ -136,7 +136,7 @@ export const artPosts = [
   },
   {
     id: "art-10",
-    image: "/images/art/art-10.png",
+    image: "/images/art/art-10.webp",
     category: "Commercial AI Art",
     cnCategory: "商业 AI 图像",
     title: "commercial AI looks acceptable",

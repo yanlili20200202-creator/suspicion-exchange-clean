@@ -673,8 +673,8 @@ function RegistrationPanel({ marketState, onAccountGenerated }) {
               <span>It?</span>
             </h1>
             <p className="registration-project-title">
-              The Suspicion Casino
-              <span className="cn-line">怀疑赌场</span>
+              A? CASINO
+              <span className="cn-line">？赌场</span>
             </p>
             <div className="registration-tagline">
               <strong>Place your judgement.</strong>
@@ -1660,6 +1660,7 @@ export function MainScreen() {
   const [isConfirming, setIsConfirming] = useState(false);
   const confirmingRef = useRef(false);
   const supabaseAuthTestStartedRef = useRef(false);
+  const preloadedCaseImagesRef = useRef(new Map());
   const [confirmedBets, setConfirmedBets] = useState(() =>
     getSessionConfirmedBets(currentUser),
   );
@@ -1668,6 +1669,22 @@ export function MainScreen() {
   const currentPostType = currentCase
     ? POST_TYPE_LABELS[currentCase.categoryId]
     : { en: "Post", cn: "帖子" };
+
+  useEffect(() => {
+    selectedCases.forEach((caseData, index) => {
+      const imagePath = caseData?.image;
+      if (!imagePath || preloadedCaseImagesRef.current.has(imagePath)) return;
+
+      const image = new Image();
+      if (index === 0) image.fetchPriority = "high";
+      image.decoding = "async";
+      image.addEventListener("error", () => {
+        console.warn(`Case image preload failed: ${imagePath}`);
+      });
+      preloadedCaseImagesRef.current.set(imagePath, image);
+      image.src = imagePath;
+    });
+  }, [selectedCases]);
 
   useEffect(() => {
     if (supabaseAuthTestStartedRef.current) return;
@@ -2056,6 +2073,9 @@ export function MainScreen() {
                 <img
                   src={currentCase.image}
                   alt={currentCase.title}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </div>
 

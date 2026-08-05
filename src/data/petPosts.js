@@ -1,7 +1,7 @@
 export const petPosts = [
   {
     id: "pet-01",
-    image: "/images/pet/pet-1.png",
+    image: "/images/pet/pet-1.webp",
     category: "Pet Video",
     cnCategory: "宠物视频",
     title: "the cat moves like a generated meme",
@@ -16,7 +16,7 @@ export const petPosts = [
   },
   {
     id: "pet-02",
-    image: "/images/pet/pet-2.png",
+    image: "/images/pet/pet-2.webp",
     category: "Cat Clip",
     cnCategory: "猫咪短片",
     title: "too cute to be real",
@@ -31,7 +31,7 @@ export const petPosts = [
   },
   {
     id: "pet-03",
-    image: "/images/pet/pet-3.png",
+    image: "/images/pet/pet-3.webp",
     category: "Funny Pet",
     cnCategory: "搞笑宠物",
     title: "the dog reacts too perfectly",
@@ -46,7 +46,7 @@ export const petPosts = [
   },
   {
     id: "pet-04",
-    image: "/images/pet/pet-4.png",
+    image: "/images/pet/pet-4.webp",
     category: "AI Pet Ad",
     cnCategory: "AI 宠物广告",
     title: "the perfect puppy has no label",
@@ -61,7 +61,7 @@ export const petPosts = [
   },
   {
     id: "pet-05",
-    image: "/images/pet/pet-5.png",
+    image: "/images/pet/pet-5.webp",
     category: "Cat Behaviour",
     cnCategory: "猫咪行为",
     title: "the cat opens the door",
@@ -76,7 +76,7 @@ export const petPosts = [
   },
   {
     id: "pet-06",
-    image: "/images/pet/pet-6.png",
+    image: "/images/pet/pet-6.webp",
     category: "Pet Portrait",
     cnCategory: "宠物肖像",
     title: "studio light makes the cat fake",
@@ -91,7 +91,7 @@ export const petPosts = [
   },
   {
     id: "pet-07",
-    image: "/images/pet/pet-7.png",
+    image: "/images/pet/pet-7.webp",
     category: "Low Quality Pet Clip",
     cnCategory: "低清宠物视频",
     title: "blur makes it believable",
@@ -106,7 +106,7 @@ export const petPosts = [
   },
   {
     id: "pet-08",
-    image: "/images/pet/pet-8.png",
+    image: "/images/pet/pet-8.webp",
     category: "Talking Pet",
     cnCategory: "说话宠物",
     title: "the pet voice makes everything suspicious",
@@ -121,7 +121,7 @@ export const petPosts = [
   },
   {
     id: "pet-09",
-    image: "/images/pet/pet-9.png",
+    image: "/images/pet/pet-9.webp",
     category: "Pet Filter",
     cnCategory: "宠物滤镜",
     title: "the filter becomes the crime",
@@ -136,7 +136,7 @@ export const petPosts = [
   },
   {
     id: "pet-10",
-    image: "/images/pet/pet-10.png",
+    image: "/images/pet/pet-10.webp",
     category: "Generated Animal",
     cnCategory: "生成动物",
     title: "the fantasy cat passes as cute",

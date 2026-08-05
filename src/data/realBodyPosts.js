@@ -1,7 +1,7 @@
 export const realBodyPosts = [
   {
     id: "real-01",
-    image: "/images/realbody/real-1.png",
+    image: "/images/realbody/real-1.webp",
     category: "Real Body",
     cnCategory: "真人身体",
     title: "too polished to be trusted",
@@ -16,7 +16,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-02",
-    image: "/images/realbody/real-2.png",
+    image: "/images/realbody/real-2.webp",
     category: "Idol Video",
     cnCategory: "爱豆视频",
     title: "the idol looks unreal on stage",
@@ -31,7 +31,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-03",
-    image: "/images/realbody/real-3.png",
+    image: "/images/realbody/real-3.webp",
     category: "Digital Human",
     cnCategory: "数字人",
     title: "the virtual girl is not labelled",
@@ -46,7 +46,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-04",
-    image: "/images/realbody/real-4.png",
+    image: "/images/realbody/real-4.webp",
     category: "Cosplay",
     cnCategory: "Cosplay",
     title: "cosplay becomes evidence",
@@ -61,7 +61,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-05",
-    image: "/images/realbody/real-5.png",
+    image: "/images/realbody/real-5.webp",
     category: "Fashion Cover",
     cnCategory: "时尚封面",
     title: "a magazine face becomes suspicious",
@@ -76,7 +76,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-06",
-    image: "/images/realbody/real-6.png",
+    image: "/images/realbody/real-6.webp",
     category: "Dance Clip",
     cnCategory: "舞蹈视频",
     title: "the movement is too smooth",
@@ -91,7 +91,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-07",
-    image: "/images/realbody/real-7.png",
+    image: "/images/realbody/real-7.webp",
     category: "Street Couple",
     cnCategory: "街拍情侣",
     title: "a romantic scene passes as normal",
@@ -106,7 +106,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-08",
-    image: "/images/realbody/real-8.png",
+    image: "/images/realbody/real-8.webp",
     category: "Food Creator",
     cnCategory: "美食博主",
     title: "the face and food are both doubted",
@@ -121,7 +121,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-09",
-    image: "/images/realbody/real-9.png",
+    image: "/images/realbody/real-9.webp",
     category: "AI Advertisement",
     cnCategory: "AI 广告",
     title: "the generated model looks ordinary",
@@ -136,7 +136,7 @@ export const realBodyPosts = [
   },
   {
     id: "real-10",
-    image: "/images/realbody/real-10.png",
+    image: "/images/realbody/real-10.webp",
     category: "Fan Edit",
     cnCategory: "粉丝剪辑",
     title: "the edited body loses its reality",

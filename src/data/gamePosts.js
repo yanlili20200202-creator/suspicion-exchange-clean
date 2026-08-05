@@ -1,7 +1,7 @@
 export const gamePosts = [
   {
     id: "game-01",
-    image: "/images/game/1.png",
+    image: "/images/game/1.webp",
     category: "Game Image",
     cnCategory: "游戏图像",
     title: "new character skin looks unreal",
@@ -16,7 +16,7 @@ export const gamePosts = [
   },
   {
     id: "game-02",
-    image: "/images/game/2.png",
+    image: "/images/game/2.webp",
     category: "Game Video",
     cnCategory: "游戏视频",
     title: "fifteen seconds from a platform game",
@@ -31,7 +31,7 @@ export const gamePosts = [
   },
   {
     id: "game-03",
-    image: "/images/game/3.png",
+    image: "/images/game/3.webp",
     category: "Game Technology",
     cnCategory: "游戏技术",
     title: "AI image enhancement is not labelled",
@@ -46,7 +46,7 @@ export const gamePosts = [
   },
   {
     id: "game-04",
-    image: "/images/game/4.gif",
+    image: "/images/game/4.webp",
     category: "Pixel Game",
     cnCategory: "像素游戏",
     title: "too cute to be trusted",
@@ -61,7 +61,7 @@ export const gamePosts = [
   },
   {
     id: "game-05",
-    image: "/images/game/5.png",
+    image: "/images/game/5.webp",
     category: "Cutscene",
     cnCategory: "过场动画",
     title: "the cutscene looks like a dream",
@@ -76,7 +76,7 @@ export const gamePosts = [
   },
   {
     id: "game-06",
-    image: "/images/game/6.png",
+    image: "/images/game/6.webp",
     category: "3D Modelling",
     cnCategory: "3D 建模",
     title: "student model marked as AI",
@@ -91,7 +91,7 @@ export const gamePosts = [
   },
   {
     id: "game-07",
-    image: "/images/game/7.png",
+    image: "/images/game/7.webp",
     category: "Game Ad",
     cnCategory: "游戏广告",
     title: "the ad looks normal",
@@ -106,7 +106,7 @@ export const gamePosts = [
   },
   {
     id: "game-08",
-    image: "/images/game/8.png",
+    image: "/images/game/8.webp",
     category: "Fan Map",
     cnCategory: "玩家地图",
     title: "a fan-made map becomes suspicious",
@@ -121,7 +121,7 @@ export const gamePosts = [
   },
   {
     id: "game-09",
-    image: "/images/game/9.png",
+    image: "/images/game/9.webp",
     category: "Low Quality Clip",
     cnCategory: "低清录屏",
     title: "low quality protects it",
@@ -136,7 +136,7 @@ export const gamePosts = [
   },
   {
     id: "game-10",
-    image: "/images/game/10.png",
+    image: "/images/game/10.webp",
     category: "AI Game Trailer",
     cnCategory: "AI 游戏预告",
     title: "AI trailer passes as normal",
