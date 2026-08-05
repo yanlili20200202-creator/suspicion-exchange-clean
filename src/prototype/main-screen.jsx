@@ -23,6 +23,7 @@ import {
   spendTrustChips,
 } from "./account-store";
 import { createPrototypeCases } from "./prototype-case-data.js";
+import { supabase } from "./supabase-client.js";
 import { STORAGE_KEYS } from "./storage-keys.js";
 import "./prototype.css";
 
@@ -318,6 +319,7 @@ function readSelectedCases(account) {
 
 function createAndSaveSelectedCases(account) {
   const selectedCases = createPrototypeCases();
+  const sessionId = crypto.randomUUID();
 
   try {
     localStorage.setItem(
@@ -325,6 +327,7 @@ function createAndSaveSelectedCases(account) {
       JSON.stringify({
         accountNumber: account.accountNumber,
         createdAt: account.createdAt,
+        sessionId,
         sessionRulesVersion: PROTOTYPE_SESSION_RULES_VERSION,
         sessionStartBetCount: account.bets.length,
         confirmedBetIds: [],
@@ -338,8 +341,94 @@ function createAndSaveSelectedCases(account) {
   return selectedCases;
 }
 
+function getOrCreateSessionId(account) {
+  if (!account) return null;
+
+  try {
+    const savedSelection = JSON.parse(
+      localStorage.getItem(STORAGE_KEYS.prototypeSelectedCases) ?? "null",
+    );
+    const belongsToAccount =
+      savedSelection?.accountNumber === account.accountNumber &&
+      savedSelection?.createdAt === account.createdAt;
+
+    if (!belongsToAccount) return null;
+    if (typeof savedSelection.sessionId === "string" && savedSelection.sessionId) {
+      return savedSelection.sessionId;
+    }
+
+    const sessionId = crypto.randomUUID();
+    localStorage.setItem(
+      STORAGE_KEYS.prototypeSelectedCases,
+      JSON.stringify({ ...savedSelection, sessionId }),
+    );
+    return sessionId;
+  } catch (error) {
+    console.error("Could not create or restore the prototype session ID:", error);
+    return null;
+  }
+}
+
 function getOrCreateSelectedCases(account) {
-  return readSelectedCases(account) ?? createAndSaveSelectedCases(account);
+  const selectedCases =
+    readSelectedCases(account) ?? createAndSaveSelectedCases(account);
+  getOrCreateSessionId(account);
+  return selectedCases;
+}
+
+async function uploadConfirmedBetToSupabase({
+  account,
+  bet,
+  sessionId,
+  roundNumber,
+  caseData,
+}) {
+  if (!supabase) {
+    console.error("Supabase bet upload failed: client is not configured.");
+    return;
+  }
+
+  try {
+    const {
+      data: { user },
+      error: getUserError,
+    } = await supabase.auth.getUser();
+
+    if (getUserError) throw getUserError;
+    if (!user) throw new Error("Supabase anonymous user is unavailable.");
+
+    const formattedAccountNumber = String(account.accountNumber ?? "").match(
+      /\d+$/,
+    )?.[0];
+    const accountNumber = Number(
+      account.supabaseAccountNumber ?? formattedAccountNumber,
+    );
+    if (!Number.isInteger(accountNumber)) {
+      throw new Error("The participant database account number is unavailable.");
+    }
+    if (!sessionId) {
+      throw new Error("The current five-round session ID is unavailable.");
+    }
+
+    const { error } = await supabase.from("bets").insert({
+      user_id: user.id,
+      account_number: accountNumber,
+      session_id: sessionId,
+      round_number: roundNumber,
+      case_id: caseData.caseId,
+      category: caseData.categoryId,
+      selected_action: bet.actionLabel.toUpperCase(),
+      visible_cost: bet.visibleCost,
+      actual_balance_change: bet.actualBalanceChange,
+      chips_before: bet.chipsBefore,
+      chips_after: bet.chipsAfter,
+    });
+
+    if (error) throw error;
+    console.log(`Supabase bet uploaded: round ${roundNumber}`);
+  } catch (error) {
+    console.error("Supabase bet upload failed:", error);
+  }
 }
 
 function getSessionConfirmedBets(account) {
@@ -522,17 +611,40 @@ function clearMarketEntryStatus() {
 function RegistrationPanel({ marketState, onAccountGenerated }) {
   const [nickname, setNickname] = useState("");
   const [error, setError] = useState("");
+  const [errorChinese, setErrorChinese] = useState("");
+  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const user = createAccount(nickname, marketState);
 
-    if (!user) {
+    if (!nickname.trim()) {
       setError("Enter a nickname before generating an account.");
+      setErrorChinese("生成账户前请输入昵称。");
       return;
     }
 
-    onAccountGenerated(user);
+    if (isCreatingAccount) return;
+    setIsCreatingAccount(true);
+    setError("");
+    setErrorChinese("");
+
+    try {
+      const user = await createAccount(nickname, marketState);
+
+      if (!user) {
+        setError("ACCOUNT CREATION FAILED");
+        setErrorChinese("账户创建失败");
+        return;
+      }
+
+      onAccountGenerated(user);
+    } catch (accountCreationError) {
+      console.error("Supabase account creation failed:", accountCreationError);
+      setError("ACCOUNT CREATION FAILED");
+      setErrorChinese("账户创建失败");
+    } finally {
+      setIsCreatingAccount(false);
+    }
   }
 
   return (
@@ -595,6 +707,7 @@ function RegistrationPanel({ marketState, onAccountGenerated }) {
                 onChange={(event) => {
                   setNickname(event.target.value);
                   setError("");
+                  setErrorChinese("");
                 }}
                 type="text"
                 value={nickname}
@@ -602,12 +715,18 @@ function RegistrationPanel({ marketState, onAccountGenerated }) {
               {error && (
                 <p className="registration-error" role="alert">
                   {error}
-                  <span className="cn-line">生成账户前请输入昵称。</span>
+                  <span className="cn-line">{errorChinese}</span>
                 </p>
               )}
-              <button className="generate-account-button" type="submit">
-                Generate Account
-                <span className="cn-line">生成账户</span>
+              <button
+                className="generate-account-button"
+                disabled={isCreatingAccount}
+                type="submit"
+              >
+                {isCreatingAccount ? "CREATING ACCOUNT..." : "Generate Account"}
+                <span className="cn-line">
+                  {isCreatingAccount ? "正在创建账户……" : "生成账户"}
+                </span>
               </button>
               <p className="registration-privacy-note">
                 No real name is needed. Your betting data is saved locally.
@@ -1540,6 +1659,7 @@ export function MainScreen() {
   const [opaqueMessage, setOpaqueMessage] = useState("");
   const [isConfirming, setIsConfirming] = useState(false);
   const confirmingRef = useRef(false);
+  const supabaseAuthTestStartedRef = useRef(false);
   const [confirmedBets, setConfirmedBets] = useState(() =>
     getSessionConfirmedBets(currentUser),
   );
@@ -1548,6 +1668,60 @@ export function MainScreen() {
   const currentPostType = currentCase
     ? POST_TYPE_LABELS[currentCase.categoryId]
     : { en: "Post", cn: "帖子" };
+
+  useEffect(() => {
+    if (supabaseAuthTestStartedRef.current) return;
+    supabaseAuthTestStartedRef.current = true;
+
+    if (!supabase) {
+      console.error(
+        "Supabase anonymous sign-in test could not start because the client is not configured.",
+      );
+      return;
+    }
+
+    async function testSupabaseAnonymousAuth() {
+      try {
+        const {
+          data: { user },
+          error: getUserError,
+        } = await supabase.auth.getUser();
+
+        if (getUserError) {
+          console.error(
+            "Supabase getUser failed during the anonymous sign-in test:",
+            getUserError,
+          );
+        }
+
+        if (user) {
+          console.log("Supabase anonymous user already exists:", user.id);
+          return;
+        }
+
+        const { data, error } = await supabase.auth.signInAnonymously();
+
+        if (error) {
+          console.error("Supabase anonymous sign-in failed:", error);
+          return;
+        }
+
+        if (data.user) {
+          console.log(
+            "Supabase anonymous sign-in successful:",
+            data.user.id,
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Unexpected Supabase anonymous sign-in test error:",
+          error,
+        );
+      }
+    }
+
+    void testSupabaseAnonymousAuth();
+  }, []);
 
   useEffect(() => {
     function syncCurrentAccount(event) {
@@ -1718,6 +1892,14 @@ export function MainScreen() {
       );
 
       saveSessionConfirmedBets(updatedUser, updatedBets);
+      const sessionId = getOrCreateSessionId(updatedUser);
+      void uploadConfirmedBetToSupabase({
+        account: updatedUser,
+        bet: newBet,
+        sessionId,
+        roundNumber: updatedBets.length,
+        caseData: currentCase,
+      });
       if (
         updatedBets.length >= REQUIRED_CONFIRMED_BETS &&
         currentCaseIndex === REQUIRED_CONFIRMED_BETS - 1
