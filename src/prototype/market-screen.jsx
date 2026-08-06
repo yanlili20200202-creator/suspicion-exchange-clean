@@ -24,6 +24,7 @@ const OVERVIEW_ACTIONS = [
   "FOLD",
   "I DON'T CARE",
 ];
+const VALID_ACTIONS = new Set(OVERVIEW_ACTIONS);
 
 const CURVE_MIN_AMPLITUDE = 5;
 const CURVE_MAX_AMPLITUDE = 24;
@@ -600,6 +601,34 @@ function TerminalScaleShell({ action, terminalScaleMap, children }) {
 let betCountsRequest = null;
 let marketSessionRequest = null;
 
+function createEmptyBetCounts() {
+  return { ...EMPTY_BET_COUNTS };
+}
+
+function countBetActions(rows) {
+  const nextCounts = createEmptyBetCounts();
+  const unknownActions = new Set();
+
+  for (const row of rows ?? []) {
+    const action = row?.selected_action;
+
+    if (VALID_ACTIONS.has(action)) {
+      nextCounts[action] += 1;
+    } else if (action != null) {
+      unknownActions.add(action);
+    }
+  }
+
+  if (unknownActions.size > 0) {
+    console.warn(
+      "[Market] Unknown selected_action values:",
+      [...unknownActions],
+    );
+  }
+
+  return nextCounts;
+}
+
 function ensureMarketSession() {
   if (!marketSessionRequest) {
     marketSessionRequest = (async () => {
@@ -673,31 +702,31 @@ function loadBetCounts() {
         throw error;
       }
 
-      const nextCounts = { ...EMPTY_BET_COUNTS };
-      const unknownActions = new Set();
-
-      for (const row of data ?? []) {
-        const action = row?.selected_action;
-
-        if (Object.prototype.hasOwnProperty.call(nextCounts, action)) {
-          nextCounts[action] += 1;
-        } else {
-          unknownActions.add(action);
-        }
-      }
-
-      if (unknownActions.size > 0) {
-        console.warn(
-          "Supabase bets contained unknown selected_action values; these rows were ignored:",
-          [...unknownActions],
-        );
-      }
-
-      return nextCounts;
+      return countBetActions(data);
     })();
   }
 
   return betCountsRequest;
+}
+
+async function fetchFreshBetCounts() {
+  if (!supabase) {
+    throw new Error(
+      "Supabase bet count reconciliation could not start because the client is unavailable.",
+    );
+  }
+
+  await ensureMarketSession();
+
+  const { data, error } = await supabase
+    .from("bets")
+    .select("selected_action");
+
+  if (error) {
+    throw error;
+  }
+
+  return countBetActions(data);
 }
 
 export function MarketScreen() {
@@ -708,24 +737,133 @@ export function MarketScreen() {
   const overviewGroupRef = useRef(null);
 
   useEffect(() => {
-    let isActive = true;
+    let cancelled = false;
+    let channel = null;
+    let reconcileTimer = null;
+    let reconcileInterval = null;
 
-    loadBetCounts()
-      .then((nextCounts) => {
-        if (!isActive) return;
+    const reconcileBetCounts = async (reason) => {
+      try {
+        const freshCounts = await fetchFreshBetCounts();
+        if (cancelled) return;
+
+        setBetCounts(freshCounts);
+        console.info(`[Market] Bet counts reconciled: ${reason}`);
+      } catch (error) {
+        console.error(
+          `[Market] Bet count reconciliation failed: ${reason}`,
+          error,
+        );
+      }
+    };
+
+    const scheduleReconciliation = () => {
+      if (reconcileTimer !== null) {
+        window.clearTimeout(reconcileTimer);
+      }
+
+      reconcileTimer = window.setTimeout(() => {
+        reconcileTimer = null;
+        void reconcileBetCounts("realtime insert");
+      }, 500);
+    };
+
+    const handleBetInsert = (payload) => {
+      if (cancelled) return;
+
+      const action = payload?.new?.selected_action;
+      if (!VALID_ACTIONS.has(action)) {
+        console.warn("[Market] Unknown realtime selected_action:", action);
+        return;
+      }
+
+      setBetCounts((previousCounts) => ({
+        ...previousCounts,
+        [action]: (previousCounts[action] ?? 0) + 1,
+      }));
+      console.info(`[Market] Realtime bet received: ${action}`);
+      scheduleReconciliation();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void reconcileBetCounts("visibility restored");
+      }
+    };
+
+    const handleOnline = () => {
+      void reconcileBetCounts("network restored");
+    };
+
+    const initialiseMarketData = async () => {
+      try {
+        const nextCounts = await loadBetCounts();
+        if (cancelled) return;
+
         setBetCounts(nextCounts);
         setCountsError(null);
         setIsLoadingCounts(false);
-      })
-      .catch((error) => {
+
+        channel = supabase
+          .channel("market-bets-inserts")
+          .on(
+            "postgres_changes",
+            {
+              event: "INSERT",
+              schema: "public",
+              table: "bets",
+            },
+            handleBetInsert,
+          )
+          .subscribe((status, error) => {
+            if (cancelled) return;
+
+            if (status === "SUBSCRIBED") {
+              console.info("[Market] Realtime subscribed");
+              void reconcileBetCounts("subscribed");
+            } else if (status === "CHANNEL_ERROR") {
+              console.error("[Market] Realtime channel error", error);
+            } else if (status === "TIMED_OUT") {
+              console.warn("[Market] Realtime subscription timed out");
+            } else if (status === "CLOSED") {
+              console.warn("[Market] Realtime channel closed");
+            }
+          });
+
+        reconcileInterval = window.setInterval(() => {
+          void reconcileBetCounts("periodic");
+        }, 30000);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        window.addEventListener("online", handleOnline);
+      } catch (error) {
         console.error("Supabase bet counts query failed:", error);
-        if (!isActive) return;
+        if (cancelled) return;
         setCountsError(error);
         setIsLoadingCounts(false);
-      });
+      }
+    };
+
+    void initialiseMarketData();
 
     return () => {
-      isActive = false;
+      cancelled = true;
+
+      if (reconcileTimer !== null) {
+        window.clearTimeout(reconcileTimer);
+      }
+      if (reconcileInterval !== null) {
+        window.clearInterval(reconcileInterval);
+      }
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange,
+      );
+      window.removeEventListener("online", handleOnline);
+
+      if (channel) {
+        void supabase.removeChannel(channel);
+      }
     };
   }, []);
 
