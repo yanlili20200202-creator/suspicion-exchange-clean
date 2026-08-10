@@ -12,10 +12,10 @@ const EMPTY_BET_COUNTS = {
 };
 
 const OVERVIEW_MIN_DATA_SCALE = 0.5;
-const OVERVIEW_MAX_DATA_SCALE = 1.5;
+const OVERVIEW_MAX_DATA_SCALE = 1.65;
 const OVERVIEW_EQUAL_DATA_SCALE = 1;
 const TERMINAL_MIN_SCALE = 0.5;
-const TERMINAL_MAX_SCALE = 1.4;
+const TERMINAL_MAX_SCALE = 1.45;
 const TERMINAL_EQUAL_SCALE = 1;
 const OVERVIEW_ACTIONS = [
   "BET HUMAN",
@@ -583,7 +583,12 @@ function OverviewItems({
   });
 }
 
-function TerminalScaleShell({ action, terminalScaleMap, children }) {
+function TerminalScaleShell({
+  action,
+  terminalScaleMap,
+  pulseVersion,
+  children,
+}) {
   return (
     <div className="market-terminal-stage">
       <div
@@ -592,7 +597,12 @@ function TerminalScaleShell({ action, terminalScaleMap, children }) {
           "--terminal-data-scale": terminalScaleMap[action] ?? 1,
         }}
       >
-        {children}
+        <div
+          className={`market-terminal-pulse-shell${pulseVersion > 0 ? " is-pulsing" : ""}`}
+          key={`${action}-${pulseVersion}`}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -766,6 +776,9 @@ export function MarketScreen() {
   const [isLoadingCounts, setIsLoadingCounts] = useState(true);
   const [countsError, setCountsError] = useState(null);
   const [totalParticipants, setTotalParticipants] = useState(null);
+  const [terminalPulseVersions, setTerminalPulseVersions] = useState(() =>
+    Object.fromEntries(OVERVIEW_ACTIONS.map((action) => [action, 0])),
+  );
   const [overviewGroupWidth, setOverviewGroupWidth] = useState(0);
   const overviewGroupRef = useRef(null);
 
@@ -813,6 +826,10 @@ export function MarketScreen() {
       setBetCounts((previousCounts) => ({
         ...previousCounts,
         [action]: (previousCounts[action] ?? 0) + 1,
+      }));
+      setTerminalPulseVersions((previousVersions) => ({
+        ...previousVersions,
+        [action]: (previousVersions[action] ?? 0) + 1,
       }));
       console.info(`[Market] Realtime bet received: ${action}`);
       scheduleReconciliation();
@@ -1049,6 +1066,7 @@ export function MarketScreen() {
                   <TerminalScaleShell
                     action="BET HUMAN"
                     terminalScaleMap={terminalScaleMap}
+                    pulseVersion={terminalPulseVersions["BET HUMAN"] ?? 0}
                   >
                     <div className="market-pool-shape market-pool-human" />
                   </TerminalScaleShell>
@@ -1073,6 +1091,7 @@ export function MarketScreen() {
                   <TerminalScaleShell
                     action="BET AI"
                     terminalScaleMap={terminalScaleMap}
+                    pulseVersion={terminalPulseVersions["BET AI"] ?? 0}
                   >
                     <div className="market-pool-shape market-pool-ai" />
                   </TerminalScaleShell>
@@ -1097,6 +1116,7 @@ export function MarketScreen() {
                   <TerminalScaleShell
                     action="BET MIXED"
                     terminalScaleMap={terminalScaleMap}
+                    pulseVersion={terminalPulseVersions["BET MIXED"] ?? 0}
                   >
                     <svg
                       className="market-pool-shape market-pool-mixed"
@@ -1127,6 +1147,7 @@ export function MarketScreen() {
                   <TerminalScaleShell
                     action="FOLD"
                     terminalScaleMap={terminalScaleMap}
+                    pulseVersion={terminalPulseVersions.FOLD ?? 0}
                   >
                     <svg
                       className="market-pool-shape market-pool-fold"
@@ -1157,6 +1178,7 @@ export function MarketScreen() {
                   <TerminalScaleShell
                     action="I DON'T CARE"
                     terminalScaleMap={terminalScaleMap}
+                    pulseVersion={terminalPulseVersions["I DON'T CARE"] ?? 0}
                   >
                     <div className="market-pool-shape market-pool-dont-care" />
                   </TerminalScaleShell>
