@@ -2680,6 +2680,35 @@ button {
   }
 }
 
+/* Swap only the bottom response and next-post blocks. */
+.exchange-shell .case-board > .feedback {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 90px;
+  max-height: none;
+  box-sizing: border-box;
+  margin: 0.42rem 0 0;
+  overflow: visible;
+  padding: 0.5rem;
+}
+
+.exchange-shell .action-panel > .next-case-button {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+@media (min-width: 901px) {
+  .exchange-shell .action-panel > .next-case-button {
+    position: absolute;
+    right: var(--action-panel-inset);
+    bottom: var(--action-panel-inset);
+  }
+}
+
 /* The final voucher can be taller than one viewport; never crop its lower
    information boxes or actions with the betting screen's one-screen rule. */
 .exchange-shell.final-summary-shell {

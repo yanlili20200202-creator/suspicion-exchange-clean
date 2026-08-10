@@ -2119,31 +2119,24 @@ export function MainScreen() {
               </section>
             </div>
 
-            <button
-              className="next-case-button"
-              onClick={showNextCase}
-              type="button"
-            >
-              <span className="next-post-main">
-                NEXT POST
-                <span className="cn-line">下一条帖子</span>
-              </span>
-              <span className="next-post-preview">
-                Next:{" "}
-                {
-                  selectedCases[(currentCaseIndex + 1) % selectedCases.length]
-                    .categoryName
-                }
+            <section className="panel feedback" aria-live="polite">
+              <p className="feedback-status">
+                System Response
+                <span className="cn-line">系统回应</span>
+              </p>
+              <p className="feedback-message">
+                {opaqueMessage?.en ?? state.feedback}
                 <span className="cn-line">
-                  下一个：
-                  {
-                    selectedCases[
-                      (currentCaseIndex + 1) % selectedCases.length
-                    ].cnCategoryName
-                  }
+                  {opaqueMessage?.cn ?? state.cnFeedback}
                 </span>
-              </span>
-            </button>
+              </p>
+              {!opaqueMessage && (
+                <p className="feedback-detail">
+                  {state.detail}
+                  <span className="cn-line">{state.cnDetail}</span>
+                </p>
+              )}
+            </section>
           </article>
         </section>
 
@@ -2299,24 +2292,31 @@ export function MainScreen() {
               <span className="cn-line">重置市场</span>
             </button>
 
-            <section className="panel feedback" aria-live="polite">
-              <p className="feedback-status">
-                System Response
-                <span className="cn-line">系统回应</span>
-              </p>
-              <p className="feedback-message">
-                {opaqueMessage?.en ?? state.feedback}
+            <button
+              className="next-case-button"
+              onClick={showNextCase}
+              type="button"
+            >
+              <span className="next-post-main">
+                NEXT POST
+                <span className="cn-line">下一条帖子</span>
+              </span>
+              <span className="next-post-preview">
+                Next:{" "}
+                {
+                  selectedCases[(currentCaseIndex + 1) % selectedCases.length]
+                    .categoryName
+                }
                 <span className="cn-line">
-                  {opaqueMessage?.cn ?? state.cnFeedback}
+                  下一个：
+                  {
+                    selectedCases[
+                      (currentCaseIndex + 1) % selectedCases.length
+                    ].cnCategoryName
+                  }
                 </span>
-              </p>
-              {!opaqueMessage && (
-                <p className="feedback-detail">
-                  {state.detail}
-                  <span className="cn-line">{state.cnDetail}</span>
-                </p>
-              )}
-            </section>
+              </span>
+            </button>
           </section>
         </aside>
       </div>
