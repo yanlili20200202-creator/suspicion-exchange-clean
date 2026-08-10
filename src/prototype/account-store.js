@@ -90,19 +90,6 @@ export async function getOrCreateParticipant(nickname) {
   }
 
   const participantColumns = "account_number,nickname,created_at";
-  const { data: existingParticipant, error: participantLookupError } =
-    await supabase
-      .from("participants")
-      .select(participantColumns)
-      .eq("user_id", authUser.id)
-      .maybeSingle();
-
-  if (participantLookupError) throw participantLookupError;
-
-  if (existingParticipant) {
-    return { ...existingParticipant, userId: authUser.id };
-  }
-
   const { data: insertedParticipant, error: participantInsertError } =
     await supabase
       .from("participants")
@@ -110,19 +97,7 @@ export async function getOrCreateParticipant(nickname) {
       .select(participantColumns)
       .single();
 
-  if (participantInsertError) {
-    if (participantInsertError.code === "23505") {
-      const { data: concurrentParticipant, error: concurrentLookupError } =
-        await supabase
-          .from("participants")
-          .select(participantColumns)
-          .eq("user_id", authUser.id)
-          .single();
-      if (concurrentLookupError) throw concurrentLookupError;
-      return { ...concurrentParticipant, userId: authUser.id };
-    }
-    throw participantInsertError;
-  }
+  if (participantInsertError) throw participantInsertError;
 
   return { ...insertedParticipant, userId: authUser.id };
 }
@@ -144,30 +119,20 @@ export async function createAccount(nickname, marketState = null) {
     participant.account_number,
   );
   const users = getUsers();
-  const existingUser = users.find(
-    (user) =>
-      user.supabaseUserId === participant.userId ||
-      user.accountNumber === accountNumber,
-  );
   const createdAt = participant.created_at ?? new Date().toISOString();
   const user = normalizeUser({
-    ...existingUser,
     nickname: participant.nickname ?? cleanNickname,
     accountNumber,
     createdAt,
-    sessionDate: existingUser?.sessionDate ?? getSessionDate(new Date(createdAt)),
-    trustChips: existingUser?.trustChips ?? 100,
-    bets: existingUser?.bets ?? [],
+    sessionDate: getSessionDate(new Date(createdAt)),
+    trustChips: 100,
+    bets: [],
     supabaseUserId: participant.userId,
     supabaseAccountNumber: participant.account_number,
   });
 
   try {
-    const updatedUsers = existingUser
-      ? users.map((savedUser) =>
-          savedUser === existingUser ? user : savedUser,
-        )
-      : [...users, user];
+    const updatedUsers = [...users, user];
     localStorage.setItem(STORAGE_KEYS.currentUser, JSON.stringify(user));
     localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(updatedUsers));
     recordAccountRegistration(user, marketState);

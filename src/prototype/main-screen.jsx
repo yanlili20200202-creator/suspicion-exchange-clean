@@ -1816,6 +1816,11 @@ export function MainScreen() {
     setCurrentCaseIndex(0);
     clearMarketEntryStatus();
     setMarketEntryStatus(null);
+    try {
+      localStorage.removeItem(STORAGE_KEYS.prototypeSelectedCases);
+    } catch {
+      // React state still returns the next audience to registration.
+    }
     clearCurrentUser();
     setCurrentUser(null);
   }
