@@ -1784,11 +1784,18 @@ export function MainScreen() {
     return () => window.removeEventListener("storage", syncCurrentAccount);
   }, []);
 
-  function showNextCase() {
+  function advanceToNextPost(nextCaseIndex) {
     setSettlementResult(null);
     setSelectedAction(null);
     setBetError("");
-    setCurrentCaseIndex((index) => (index + 1) % selectedCases.length);
+    setCurrentCaseIndex(nextCaseIndex);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+  }
+
+  function showNextCase() {
+    advanceToNextPost((index) => (index + 1) % selectedCases.length);
   }
 
   function selectBet(action) {
@@ -1953,10 +1960,7 @@ export function MainScreen() {
 
   function continueAfterSettlement() {
     if (!settlementResult) return;
-    setCurrentCaseIndex(settlementResult.nextCaseIndex);
-    setSettlementResult(null);
-    setSelectedAction(null);
-    setBetError("");
+    advanceToNextPost(settlementResult.nextCaseIndex);
   }
 
   if (!currentUser) {
