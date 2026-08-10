@@ -905,21 +905,65 @@ body {
     width: var(--market-lane-label-width);
   }
 
-  .market-overview-item {
-    grid-template-rows: 9rem auto;
-    flex-basis: clamp(6.25rem, 23vw, 8rem);
+  .market-overview-viewport {
+    max-width: 100%;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
-  .market-overview-shape-stage {
-    min-height: 9rem;
+  .market-overview-ticker,
+  .market-overview-ticker.is-ready {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    visibility: visible;
+    animation: none;
+    transform: none;
+    will-change: auto;
   }
 
   .market-overview-group {
     --market-overview-group-gap: clamp(14px, 3vw, 22px);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 1rem var(--market-overview-group-gap);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 1rem 0 0.85rem;
+  }
+
+  .market-overview-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .market-overview-item {
+    grid-template-rows: 9rem auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    flex-basis: auto;
+  }
+
+  .market-overview-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .market-overview-shape-stage {
+    min-width: 0;
+    min-height: 9rem;
+  }
+
+  .market-overview-count {
+    max-width: 100%;
   }
 
   .market-overview-feed {
+    max-width: 100%;
     flex-wrap: wrap;
+    overflow-wrap: anywhere;
   }
 
   .market-legend-list {
