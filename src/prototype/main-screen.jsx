@@ -9,6 +9,7 @@ import {
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
 import { toJpeg } from "html-to-image";
+import QRCode from "qrcode";
 import {
   getSnapshot,
   resetMarketState,
@@ -76,6 +77,58 @@ const INSUFFICIENT_CHIPS_MESSAGE_CN =
   "信任筹码不足。你的判断权力已被暂时中止。";
 const REQUIRED_CONFIRMED_BETS = 5;
 const PROTOTYPE_SESSION_RULES_VERSION = 7;
+const desktopReceiptDeliveryPromises = new Map();
+
+function isRealMobileBrowser() {
+  if (typeof navigator === "undefined") return false;
+
+  if (navigator.userAgentData?.mobile === true) return true;
+  if (navigator.userAgentData?.mobile === false) return false;
+
+  const userAgent = navigator.userAgent ?? "";
+  const isMobileUserAgent =
+    /Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Mobile/i.test(userAgent);
+  const isIPadOs =
+    navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+
+  return isMobileUserAgent || isIPadOs;
+}
+
+function isIosSafariBrowser() {
+  if (typeof navigator === "undefined") return false;
+
+  const userAgent = navigator.userAgent ?? "";
+  const isIos =
+    /iPhone|iPad|iPod/i.test(userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isSafari =
+    /WebKit/i.test(userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS/i.test(userAgent);
+
+  return isIos && isSafari;
+}
+
+async function createReceiptJpegBlob(receiptNode) {
+  if (!receiptNode) {
+    throw new Error("The receipt DOM is not available.");
+  }
+
+  await new Promise((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(resolve)),
+  );
+  const imageData = await toJpeg(receiptNode, {
+    backgroundColor: "#ffffff",
+    cacheBust: true,
+    pixelRatio: 2,
+    quality: 0.95,
+  });
+  const response = await fetch(imageData);
+
+  if (!response.ok) {
+    throw new Error("The generated receipt image could not be converted.");
+  }
+
+  return response.blob();
+}
 
 function isSessionComplete(bets) {
   return Array.isArray(bets) && bets.length >= REQUIRED_CONFIRMED_BETS;
@@ -1394,11 +1447,17 @@ function FinalSummaryScreen({
   const [achievement] = useState(() =>
     getOrCreateSessionAchievement(account),
   );
+  const [isMobileDevice] = useState(() => isRealMobileBrowser());
   const [isSavingReceipt, setIsSavingReceipt] = useState(false);
+  const [receiptQrCode, setReceiptQrCode] = useState("");
+  const [receiptQrStatus, setReceiptQrStatus] = useState("loading");
+  const [iosFallbackReceiptUrl, setIosFallbackReceiptUrl] = useState("");
   const [showGameOverTape, setShowGameOverTape] = useState(false);
   const [societyExitBlocked, setSocietyExitBlocked] = useState(false);
+  const [receiptSessionId] = useState(() => getOrCreateSessionId(account));
   const voucherRef = useRef(null);
   const gameOverTimerRef = useRef(null);
+  const iosReceiptObjectUrlRef = useRef("");
   const receiptBets = confirmedBets.slice(0, REQUIRED_CONFIRMED_BETS);
   const voucherAccountNumber =
     account.accountNumber?.match(/\d+$/)?.[0] ?? account.accountNumber;
@@ -1414,23 +1473,110 @@ function FinalSummaryScreen({
     setIsSavingReceipt(true);
 
     try {
-      await new Promise((resolve) => requestAnimationFrame(resolve));
-      const imageData = await toJpeg(voucherRef.current, {
-        backgroundColor: "#ffffff",
-        cacheBust: true,
-        pixelRatio: 2,
-        quality: 0.95,
-      });
+      const receiptBlob = await createReceiptJpegBlob(voucherRef.current);
+      const objectUrl = URL.createObjectURL(receiptBlob);
+
+      if (isIosSafariBrowser()) {
+        if (iosReceiptObjectUrlRef.current) {
+          URL.revokeObjectURL(iosReceiptObjectUrlRef.current);
+        }
+        iosReceiptObjectUrlRef.current = objectUrl;
+        setIosFallbackReceiptUrl(objectUrl);
+        return;
+      }
+
       const downloadLink = document.createElement("a");
-      downloadLink.download = `suspicion-exchange-receipt-${voucherAccountNumber}.jpg`;
-      downloadLink.href = imageData;
+      downloadLink.download = `who-made-it-receipt-${voucherAccountNumber}.jpg`;
+      downloadLink.href = objectUrl;
+      document.body.appendChild(downloadLink);
       downloadLink.click();
+      downloadLink.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1500);
     } catch (error) {
       console.error("Failed to save receipt as JPG:", error);
     } finally {
       setIsSavingReceipt(false);
     }
   }
+
+  useEffect(() => {
+    if (isMobileDevice) return undefined;
+
+    let isCancelled = false;
+    if (!receiptSessionId || !voucherRef.current) {
+      console.error("Could not prepare the desktop receipt: session data is unavailable.");
+      setReceiptQrStatus("error");
+      return undefined;
+    }
+
+    const deliveryKey = `${voucherAccountNumber}:${receiptSessionId}`;
+    let deliveryPromise = desktopReceiptDeliveryPromises.get(deliveryKey);
+
+    if (!deliveryPromise) {
+      const receiptNode = voucherRef.current;
+      deliveryPromise = (async () => {
+        const receiptBlob = await createReceiptJpegBlob(receiptNode);
+        const storagePath = `${voucherAccountNumber}/${receiptSessionId}.jpg`;
+        const storageBucket = supabase.storage.from("receipts");
+        const { error: uploadError } = await storageBucket.upload(
+          storagePath,
+          receiptBlob,
+          {
+            cacheControl: "3600",
+            contentType: "image/jpeg",
+            upsert: true,
+          },
+        );
+
+        if (uploadError) throw uploadError;
+
+        const { data: signedUrlData, error: signedUrlError } =
+          await storageBucket.createSignedUrl(storagePath, 3600, {
+            download: `who-made-it-receipt-${voucherAccountNumber}.jpg`,
+          });
+
+        if (signedUrlError) throw signedUrlError;
+        if (!signedUrlData?.signedUrl?.startsWith("https://")) {
+          throw new Error("Supabase did not return a valid HTTPS signed URL.");
+        }
+
+        const qrCodeDataUrl = await QRCode.toDataURL(signedUrlData.signedUrl, {
+          color: { dark: "#000000", light: "#ffffff" },
+          errorCorrectionLevel: "M",
+          margin: 4,
+          width: 240,
+        });
+
+        return { qrCodeDataUrl, storagePath };
+      })();
+      desktopReceiptDeliveryPromises.set(deliveryKey, deliveryPromise);
+    }
+
+    void deliveryPromise
+      .then(({ qrCodeDataUrl, storagePath }) => {
+        if (isCancelled) return;
+        setReceiptQrCode(qrCodeDataUrl);
+        setReceiptQrStatus("ready");
+        console.info(`Receipt uploaded to Supabase Storage: ${storagePath}`);
+      })
+      .catch((error) => {
+        console.error("Failed to upload receipt or create its QR code:", error);
+        if (!isCancelled) setReceiptQrStatus("error");
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [isMobileDevice, receiptSessionId, voucherAccountNumber]);
+
+  useEffect(
+    () => () => {
+      if (iosReceiptObjectUrlRef.current) {
+        URL.revokeObjectURL(iosReceiptObjectUrlRef.current);
+      }
+    },
+    [],
+  );
 
   function playGameOverTape() {
     if (showGameOverTape || societyExitBlocked) return;
@@ -1490,6 +1636,14 @@ function FinalSummaryScreen({
                   className="final-voucher-right-notch-shadow"
                   aria-hidden="true"
                 />
+              </div>
+              <div
+                aria-label="Who Made It?"
+                className="final-voucher-who-made-it-logo"
+              >
+                <span>WHO</span>
+                <span>MADE</span>
+                <span>IT?</span>
               </div>
               <p className="final-reward-unlocked-label">
                 Reward Unlocked:
@@ -1587,17 +1741,60 @@ function FinalSummaryScreen({
             </div>
           </aside>
 
-          <button
-            className="final-summary-save-button"
-            disabled={isSavingReceipt}
-            onClick={saveReceiptAsJpeg}
-            type="button"
-          >
-            {isSavingReceipt ? "Saving..." : "Save Receipt"}
-            <span className="cn-line">
-              {isSavingReceipt ? "正在保存……" : "保存小票"}
-            </span>
-          </button>
+          {isMobileDevice ? (
+            <>
+              <button
+                className="final-summary-save-button"
+                disabled={isSavingReceipt}
+                onClick={saveReceiptAsJpeg}
+                type="button"
+              >
+                {isSavingReceipt ? "Saving..." : "Save Receipt"}
+                <span className="cn-line">
+                  {isSavingReceipt ? "正在保存……" : "保存小票"}
+                </span>
+              </button>
+              {iosFallbackReceiptUrl && (
+                <section className="final-summary-ios-save-fallback">
+                  <p>
+                    Long Press to Save
+                    <span className="cn-line">长按图片保存</span>
+                  </p>
+                  <img
+                    alt={`Receipt for account ${voucherAccountNumber}`}
+                    src={iosFallbackReceiptUrl}
+                  />
+                </section>
+              )}
+            </>
+          ) : (
+            <section
+              aria-live="polite"
+              className="final-summary-qr-panel"
+            >
+              <h2>
+                Save Receipt
+                <span className="cn-line">保存小票</span>
+              </h2>
+              <p>
+                Scan to Download
+                <span className="cn-line">扫码下载</span>
+              </p>
+              {receiptQrStatus === "ready" && receiptQrCode ? (
+                <img alt="QR code to download this receipt" src={receiptQrCode} />
+              ) : receiptQrStatus === "error" ? (
+                <p className="final-summary-qr-error">
+                  QR Temporarily Unavailable
+                  <span className="cn-line">二维码暂不可用</span>
+                </p>
+              ) : (
+                <div
+                  aria-label="Preparing receipt QR code"
+                  className="final-summary-qr-placeholder"
+                />
+              )}
+            </section>
+          )}
         </div>
       </div>
       {showGameOverTape && (
