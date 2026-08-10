@@ -1608,6 +1608,8 @@ function FinalSummaryScreen({
     [],
   );
   useEffect(() => {
+    if (isMobileDevice) return undefined;
+
     let remainingSeconds = 60;
     setNextAudienceSeconds(remainingSeconds);
 
@@ -1632,7 +1634,7 @@ function FinalSummaryScreen({
         nextAudienceTimerRef.current = null;
       }
     };
-  }, []);
+  }, [isMobileDevice]);
 
   function handlePlayAgain() {
     if (nextAudienceTimerRef.current) {
@@ -1656,12 +1658,14 @@ function FinalSummaryScreen({
             <span className="cn-line">信任兑奖中心</span>
           </h1>
         </header>
+        {!isMobileDevice && (
         <section className="final-summary-countdown" aria-live="polite">
           <strong>NEXT AUDIENCE IN {nextAudienceSeconds}</strong>
           <span className="cn-line">
             {nextAudienceSeconds} 秒后跳转下一位用户
           </span>
         </section>
+        )}
 
 
         <div className="final-summary-grid">
