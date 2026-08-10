@@ -857,7 +857,7 @@ function RulesOnboarding({ account, onEnterMarket }) {
             <p>
               Hello, {account.accountNumber}.
               <span className="cn-line">
-                你好，{account.accountNumber}。
+                你好，用户 {account.accountNumber.match(/\d+$/)?.[0] ?? account.accountNumber}。
               </span>
             </p>
             <p>
@@ -1454,9 +1454,13 @@ function FinalSummaryScreen({
   const [iosFallbackReceiptUrl, setIosFallbackReceiptUrl] = useState("");
   const [showGameOverTape, setShowGameOverTape] = useState(false);
   const [societyExitBlocked, setSocietyExitBlocked] = useState(false);
+  const [nextAudienceSeconds, setNextAudienceSeconds] = useState(60);
   const [receiptSessionId] = useState(() => getOrCreateSessionId(account));
   const voucherRef = useRef(null);
   const gameOverTimerRef = useRef(null);
+  const nextAudienceTimerRef = useRef(null);
+  const onPlayAgainRef = useRef(onPlayAgain);
+  onPlayAgainRef.current = onPlayAgain;
   const iosReceiptObjectUrlRef = useRef("");
   const receiptBets = confirmedBets.slice(0, REQUIRED_CONFIRMED_BETS);
   const voucherAccountNumber =
@@ -1542,9 +1546,9 @@ function FinalSummaryScreen({
 
         const qrCodeDataUrl = await QRCode.toDataURL(signedUrlData.signedUrl, {
           color: { dark: "#000000", light: "#ffffff" },
-          errorCorrectionLevel: "M",
+          errorCorrectionLevel: "L",
           margin: 4,
-          width: 240,
+          width: 320,
         });
 
         return { qrCodeDataUrl, storagePath };
@@ -1603,6 +1607,41 @@ function FinalSummaryScreen({
     },
     [],
   );
+  useEffect(() => {
+    let remainingSeconds = 60;
+    setNextAudienceSeconds(remainingSeconds);
+
+    const timerId = window.setInterval(() => {
+      remainingSeconds -= 1;
+      setNextAudienceSeconds(Math.max(remainingSeconds, 0));
+
+      if (remainingSeconds <= 0) {
+        window.clearInterval(timerId);
+        if (nextAudienceTimerRef.current === timerId) {
+          nextAudienceTimerRef.current = null;
+        }
+        onPlayAgainRef.current();
+      }
+    }, 1000);
+
+    nextAudienceTimerRef.current = timerId;
+
+    return () => {
+      window.clearInterval(timerId);
+      if (nextAudienceTimerRef.current === timerId) {
+        nextAudienceTimerRef.current = null;
+      }
+    };
+  }, []);
+
+  function handlePlayAgain() {
+    if (nextAudienceTimerRef.current) {
+      window.clearInterval(nextAudienceTimerRef.current);
+      nextAudienceTimerRef.current = null;
+    }
+    onPlayAgainRef.current();
+  }
+
 
   return (
     <main className="exchange-shell final-summary-shell">
@@ -1617,6 +1656,13 @@ function FinalSummaryScreen({
             <span className="cn-line">信任兑奖中心</span>
           </h1>
         </header>
+        <section className="final-summary-countdown" aria-live="polite">
+          <strong>NEXT AUDIENCE IN {nextAudienceSeconds}</strong>
+          <span className="cn-line">
+            {nextAudienceSeconds} 秒后跳转下一位用户
+          </span>
+        </section>
+
 
         <div className="final-summary-grid">
           <section className="panel final-summary-main-panel" ref={voucherRef}>
@@ -1725,7 +1771,7 @@ function FinalSummaryScreen({
             </div>
 
             <div className="final-summary-actions">
-              <button onClick={onPlayAgain} type="button">
+              <button onClick={handlePlayAgain} type="button">
                 Play Again
                 <span className="cn-line">再玩一次</span>
               </button>
