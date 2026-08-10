@@ -1017,5 +1017,16 @@ body {
   }
 }
 
+@media (orientation: portrait) and (min-width: 900px) and (min-height: 1400px) {
+  .market-main {
+    min-height: max(1100px, calc(100vh - 38rem));
+    min-height: max(1100px, calc(100svh - 38rem));
+  }
+
+  .market-lanes {
+    gap: clamp(1.75rem, 2.2vh, 3rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 }
