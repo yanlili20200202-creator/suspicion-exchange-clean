@@ -600,6 +600,7 @@ function TerminalScaleShell({ action, terminalScaleMap, children }) {
 
 let betCountsRequest = null;
 let marketSessionRequest = null;
+let totalParticipantsRequest = null;
 
 function createEmptyBetCounts() {
   return { ...EMPTY_BET_COUNTS };
@@ -683,6 +684,37 @@ function ensureMarketSession() {
   return marketSessionRequest;
 }
 
+function fetchTotalParticipants() {
+  if (!totalParticipantsRequest) {
+    totalParticipantsRequest = (async () => {
+      if (!supabase) {
+        throw new Error(
+          "Supabase participant total query could not start because the client is unavailable.",
+        );
+      }
+
+      await ensureMarketSession();
+
+      const { data, error } = await supabase.rpc("get_total_participants");
+
+      if (error) {
+        throw error;
+      }
+
+      const count = Number(data);
+      if (!Number.isFinite(count) || count < 0) {
+        throw new Error("Supabase participant total RPC returned an invalid count.");
+      }
+
+      return Math.trunc(count);
+    })().finally(() => {
+      totalParticipantsRequest = null;
+    });
+  }
+
+  return totalParticipantsRequest;
+}
+
 function loadBetCounts() {
   if (!betCountsRequest) {
     betCountsRequest = (async () => {
@@ -733,6 +765,7 @@ export function MarketScreen() {
   const [betCounts, setBetCounts] = useState(() => ({ ...EMPTY_BET_COUNTS }));
   const [isLoadingCounts, setIsLoadingCounts] = useState(true);
   const [countsError, setCountsError] = useState(null);
+  const [totalParticipants, setTotalParticipants] = useState(null);
   const [overviewGroupWidth, setOverviewGroupWidth] = useState(0);
   const overviewGroupRef = useRef(null);
 
@@ -868,6 +901,34 @@ export function MarketScreen() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const refreshTotalParticipants = async () => {
+      try {
+        const count = await fetchTotalParticipants();
+        if (!cancelled) {
+          setTotalParticipants(count);
+        }
+      } catch (error) {
+        console.error("Supabase participant total RPC failed:", error);
+        if (!cancelled) {
+          setTotalParticipants(null);
+        }
+      }
+    };
+
+    void refreshTotalParticipants();
+    const refreshInterval = window.setInterval(() => {
+      void refreshTotalParticipants();
+    }, 30000);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(refreshInterval);
+    };
+  }, []);
+
+  useEffect(() => {
     const group = overviewGroupRef.current;
     if (!group) return undefined;
 
@@ -944,6 +1005,14 @@ export function MarketScreen() {
               <span className="market-live-dot" aria-hidden="true" /> LIVE
             </strong>
             <span>实时数据</span>
+          </div>
+          <div className="market-participant-total">
+            <strong>TOTAL PARTICIPANTS</strong>
+            <span>&#24635;&#21442;&#19982;&#29992;&#25143;</span>
+            <b>{totalParticipants ?? "—"} USERS</b>
+            <span>
+              {totalParticipants ?? "—"} &#20301;&#29992;&#25143;
+            </span>
           </div>
 
           <p className="market-sidebar-statement">

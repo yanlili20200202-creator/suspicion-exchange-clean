@@ -119,11 +119,45 @@ body {
 
 .market-live-status {
   width: max-content;
-  margin-top: auto;
+  margin-top: 1rem;
   border: 3px solid #101010;
   padding: 0.55rem 0.7rem;
   line-height: 1;
   text-transform: uppercase;
+}
+
+.market-participant-total {
+  width: 100%;
+  margin-top: 0.75rem;
+  border: 3px solid #101010;
+  background: #f3dfbd;
+  box-shadow: 4px 4px 0 #df4b2f;
+  padding: 0.6rem 0.7rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.market-participant-total > strong,
+.market-participant-total > b,
+.market-participant-total > span {
+  display: block;
+}
+
+.market-participant-total > strong {
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.market-participant-total > span {
+  margin-top: 0.22rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.market-participant-total > b {
+  margin-top: 0.55rem;
+  font-size: 1.35rem;
+  font-weight: 900;
 }
 
 .market-live-status strong,
@@ -154,7 +188,7 @@ body {
 
 .market-sidebar-statement {
   width: 100%;
-  margin: 0.85rem 0 0;
+  margin: auto 0 0;
   border-top: 3px solid #101010;
   padding-top: 0.75rem;
   font-size: 0.8rem;
@@ -704,7 +738,7 @@ body {
   .market-sidebar {
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(150px, 0.75fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     align-items: start;
     gap: 1rem 1.5rem;
     min-height: 380px;
@@ -713,7 +747,7 @@ body {
 
   .market-sidebar-heading {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
     align-self: start;
   }
 
@@ -731,9 +765,16 @@ body {
     margin-top: 0;
   }
 
+  .market-participant-total {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+    margin-top: 0;
+  }
+
   .market-sidebar-statement {
     grid-column: 1 / -1;
-    grid-row: 3;
+    grid-row: 4;
     align-self: end;
     justify-self: start;
     width: min(100%, 32rem);
@@ -840,6 +881,7 @@ body {
   .market-sidebar-heading,
   .market-sidebar-cn-title,
   .market-live-status,
+  .market-participant-total,
   .market-sidebar-statement {
     grid-column: 1;
     grid-row: auto;
