@@ -897,8 +897,23 @@ body {
   .market-lane {
     --market-terminal-size: 67.28px;
     --market-lane-label-width: clamp(120px, 38vw, 155px);
-    grid-template-columns: minmax(0, 1fr) var(--market-terminal-triangle-width);
+    --market-terminal-mobile-edge-gap: 4px;
+    --market-terminal-mobile-pool-width: 112px;
+    grid-template-columns: minmax(0, 1fr) var(--market-terminal-mobile-pool-width);
     gap: 0.45rem 0.5rem;
+  }
+
+  .market-pool-space {
+    grid-column: 2;
+  }
+
+  .market-terminal-stage {
+    right: var(--market-terminal-mobile-edge-gap);
+    left: auto;
+  }
+
+  .market-terminal-pulse-shell {
+    transform-origin: right center;
   }
 
   .market-lane-label {
@@ -998,7 +1013,8 @@ body {
   .market-lane {
     --market-terminal-size: 53.36px;
     --market-lane-label-width: clamp(110px, 42vw, 135px);
-    grid-template-columns: minmax(0, 1fr) var(--market-terminal-triangle-width);
+    --market-terminal-mobile-pool-width: 90px;
+    grid-template-columns: minmax(0, 1fr) var(--market-terminal-mobile-pool-width);
     gap: 0.4rem;
   }
 
